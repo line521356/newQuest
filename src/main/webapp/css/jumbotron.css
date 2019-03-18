@@ -1,0 +1,61 @@
+
+
+
+
+/*   */
+ div,span,ul,li{
+
+    margin-left:0px;
+ }
+
+
+div{
+  block;
+} 
+
+
+#panel{
+  padding-top:150px;
+  float:left;
+  width:100%;
+}
+
+.jumbotron {
+   width: 70%; 
+   float:left;
+   filter:alpha(opacity:80); 
+   opacity:0.8;  
+   -moz-opacity:0.8;
+   -khtml-opacity: 0.8; 
+   color:#000000;
+ }
+
+
+.jumbotron h1 {
+    font-size: 500px; 
+    padding-left: 0px;
+}
+.jumbotron h4 {
+  font-size: 15px; 
+  padding-left: 20px;
+}
+/* 小屏幕（平板，大于等于768px） */
+@media (min-width: 768px) {
+.jumbotron h1 {font-size: 26px;}
+.jumbotron h4 {font-size: 15px;}
+}
+/* 中等屏幕（桌面显示器，大于等于992px） */
+@media (min-width: 992px) {
+.jumbotron h1 {font-size: 36px;}
+.jumbotron h4 {font-size: 18px;}
+
+
+#loginForm{
+    width:25%;
+    float:left;
+    padding-top: 70px;
+    padding-left: 20px;
+}
+
+
+

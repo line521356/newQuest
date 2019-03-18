@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.kepu.questionnaire.dao.IQuesnrDao" >
+
+
+
+<!-- ResultMap settings -->
+
+ 		<resultMap id="AssnDeptWithOrg" type="cn.kepu.questionnaire.pojo.TnAssignDept" >
+	  		<id property="id" column="ID" />
+	  		<association property="dept" column="deptID" 
+	  		select="cn.kepu.questionnaire.dao.IAssignDao.selOrgById"
+	  		javaType="cn.kepu.questionnaire.pojo.EosorgTOrganization"> 		
+	  		</association>
+  		</resultMap>
+  
+
+<!-- Sql settings -->
+  
+
+
+<!-- Select Part -->
+ 
+ 	 	<select id="selAllQuesnrs" resultType="cn.kepu.questionnaire.pojo.TnNeedsQuestionnaire">
+<!--  	 		select * from tn_needsquestionnaire limit 0,40	 	 -->
+				select * from tn_needsquestionnaire order by ID desc limit 30
+ 	 	</select>	 	
+ 	 
+ 	 	<select id="selQsnItmByQsnId" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.TnQuestionnaireItem">
+ 	 		select * from tn_questionnaireitem where basicInfoID = #{basicInfoID}	
+ 	 	</select>
+ 		
+ 		<select id="selQsnBscInfo" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.TnNeedsQuestionnaire">
+ 	 		select * from tn_needsquestionnaire where ID = #{quesnrID}	
+ 	 	</select>
+ 	 	
+ 	 	<select id="selAssnDeptByQIDWithOrg" resultMap="AssnDeptWithOrg">
+  			select * from tn_assigndept 
+  			where basicInfoID = #{quesnrID}
+  		</select>
+ 		
+ 		<select id="selItmChoByItmId" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.TnQuestionnaireItemChoice">
+ 	 		select * from tn_questionnaireitemchoice where itemID = #{itemID}	
+ 	 	</select>
+  
+<!-- Delete Part -->
+ 
+
+
+
+<!-- Insert Part -->
+  
+  
+  
+  
+ 		<insert id="istQsnBscInfo" parameterType="cn.kepu.questionnaire.pojo.TnNeedsQuestionnaire" 
+ 				useGeneratedKeys="true" keyProperty="ID">
+ 			insert into tn_needsquestionnaire(Theme,startTime,endTime,sendMail,ifAnonymous,remark)
+ 			values(#{theme},#{startTime},#{endTime},#{sendMail},#{ifAnonymous},#{remark})
+ 		</insert> 
+ 		
+ 		<insert id="istQsnItm" parameterType="cn.kepu.questionnaire.pojo.TnQuestionnaireItem" 
+ 				useGeneratedKeys="true" keyProperty="ID">
+ 			insert into tn_questionnaireitem(basicInfoID,typeID,title,required,hasOtherInput)
+ 			values(#{tnNeedsQuestionnaire.ID},#{typeId},#{title},#{required},#{hasOtherInput})
+ 		</insert> 
+ 		
+ 		<insert id="istQsnCho" parameterType="java.util.List" useGeneratedKeys="true">
+			<selectKey resultType="Integer" keyProperty="id" order="AFTER">  
+        		SELECT  
+        		LAST_INSERT_ID()  
+   			</selectKey> 
+			insert into tn_questionnaireitemchoice(itemID,choiceContent,choiceCode,allowOtherInput) values
+			<foreach collection="list" item="choice" index="index" separator=",">
+				(#{choice.tnQuestionnaireItem.ID},#{choice.choiceContent},#{choice.choiceCode},#{choice.allowOtherInput})
+			</foreach>
+		</insert> 
+ 		
+
+<!-- Update Part -->
+  
+</mapper>

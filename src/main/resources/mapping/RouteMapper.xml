@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kepu.questionnaire.dao.IRouteMapDao" >
+<!-- 由于关系紧密，点、预案、路线、路线线段的SQL语句也在该Mapper中 -->
+<!-- ResultMap settings -->
+
+		
+		
+
+<!-- Sql settings -->
+
+<!-- Select Part -->
+
+	<select id="getSingleRoute" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Route">	
+		select * from route where rtID = #{rtID}	
+	</select>
+		
+	<select id="getPtsInRt" resultType="cn.kepu.questionnaire.pojo.Location">	
+		select * from location where rtID = #{rtID}	and zmLev = #{zmLev}
+	</select>
+	
+	<select id="selCtRoutesInSinPlan" parameterType="java.lang.Integer" resultType="java.lang.Integer">	
+		select rtID from route_plan where planID = #{planID}	
+	</select>
+	
+	<!-- 这个是早期用来取线段测试的SQL，和本身系统功能设定不符，可考虑删除 -->
+	<select id="selSegsInSinRoute" parameterType="cn.kepu.questionnaire.pojo.Location" resultType="java.lang.String">	
+		select segSerial from routesegment where zmLev = #{zmLev} and rtID = #{rtID}	
+	</select>
+	
+	<select id="selSegsByRtID" parameterType="java.lang.Integer" resultType="java.lang.String">	
+		select segSerial from routesegment where rtID = #{rtID}	
+	</select>
+	
+	<!-- 这里不查询全数据的原因是这个查询只服务于预案优先级的rerank重新排列 -->
+	<select id="selPlanByRtID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.EmergencyPlan">	
+		select planID,targetRtID,priority,wdFrcRst,tempRst,timeRst from emergencyplan where targetRtID like concat(concat("%",#{rtID}),"%")	
+	</select>
+	
+	<select id="selAllPoisByplanID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.EmergencyPlan">	
+		select routes,materials,watersource,crew from emergencyplan where planID = #{planID}
+	</select>
+	
+	<select id="selRtsByplanID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.EmergencyPlan">	
+		select routes,targetRtID from emergencyplan where planID = #{planID}
+	</select>
+	
+	<select id="selLocsInRt" resultType="cn.kepu.questionnaire.pojo.Location">	
+		select pointX,pointY,sptOrdInRt from location where rtID = #{rtID}	and zmLev = #{zmLev} and ptType = 1
+	</select>
+	
+	<!-- 这个查询有点问题，zmlev是不生效的，因为ptID就已经唯一确定了记录 -->
+	<select id="selLocsByPtID" resultType="cn.kepu.questionnaire.pojo.Location">	
+		select pointX,pointY from location where pointID = #{pointID} and zmLev = #{zmLev}
+	</select>
+	
+	<select id="selMatInPlan" resultType="cn.kepu.questionnaire.pojo.Location">	
+		select pointX,pointY from location where rtID = #{rtID} and zmLev = #{zmLev} and ptType = 2
+	</select>
+	
+	<select id="selWaterInPlan" resultType="cn.kepu.questionnaire.pojo.Location">	
+		select pointX,pointY from location where rtID = #{rtID} and zmLev = #{zmLev} and ptType = 3
+	</select>
+	
+	<select id="selCrewStInPlan" resultType="cn.kepu.questionnaire.pojo.Location">	
+		select pointX,pointY from location where rtID = #{rtID} and zmLev = #{zmLev} and ptType = 4
+	</select>
+	
+	<select id="selRtTypeByrtID" parameterType="java.lang.Integer" resultType="java.lang.Integer">	
+		select rtType from route where rtID = #{rtID}
+	</select>
+	
+	<select id="selCpltPlanByPlanID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.EmergencyPlan">
+		select * from emergencyplan where planID = #{planID}
+	</select>
+	
+	<select id="selNameByCrewID" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select crewName from crew where crewID = #{crewID}
+	</select>
+	
+	<select id="selCpltCrew" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Crew">
+		select * from crew where crewID = #{crewID}
+	</select>
+	
+	<select id="selCpltMat" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Material">
+		select * from material where matID = #{matID}
+	</select>
+	
+	<select id="selCpltWat" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.WaterSource">
+		select * from watersource where watSrID = #{watSrID}
+	</select>
+			
+<!-- Delete Part -->
+
+		
+ 
+<!-- Insert Part -->
+  
+	<insert id="istPoiAuto" parameterType="cn.kepu.questionnaire.pojo.Location" 
+		useGeneratedKeys="true" keyProperty="pointID">
+		insert into location(pointX,pointY,zmLev,rtID,sptOrdInRt,ptType)
+		values(#{pointX},#{pointY},#{zmLev},#{rtID},#{sptOrdInRt},#{ptType})
+	</insert> 
+ 
+ 
+<!-- Update Part -->
+  
+</mapper>

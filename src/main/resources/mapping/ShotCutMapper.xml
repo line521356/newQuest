@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kepu.questionnaire.dao.IShotCutDao" >
+<!-- 由于截图管理模块功能需要有部分对于监控点与人员的语句 -->
+<!-- ResultMap settings -->
+
+		
+		
+
+<!-- Sql settings -->
+
+<!-- Select Part -->
+	
+	<select id="selImgByID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.ShotCutImg">
+		select * from shotcutimage where scImgId = #{scImgId}
+	</select>
+	
+	<select id="selAllShots" resultType="cn.kepu.questionnaire.pojo.ShotCutImg">	
+		select * from shotcutimage	
+	</select>
+	
+	<select id="selMptNameByID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.MonitorPoint">
+		select mptName from monitorpoint where mptId = #{mptId}
+	</select>
+	
+	<select id="selCrewNameByID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Crew">
+		select crewName from crew where crewID = #{crewID}
+	</select>
+	
+	<select id="selImgsByMptID" resultType="cn.kepu.questionnaire.pojo.ShotCutImg">
+	  	select * from shotcutimage 
+	  	<where>
+	  		mptId = #{mptId}
+	  		<if test="scImgType != 3">
+				and scImgType = #{scImgType}
+			</if>
+			<if test="startDate != '' and endDate == ''">
+				and date(createTime) &gt; #{startDate}
+			</if>
+			<if test="startDate == '' and endDate != ''">
+				and date(createTime) &lt; #{endDate}
+			</if>
+			<if test="startDate != '' and endDate != ''">
+			    and date(createTime) between #{startDate} and #{endDate}
+			</if>
+	  	</where>
+  	</select>
+  	
+  	<select id="selMptsByName" parameterType="java.lang.String" resultType="cn.kepu.questionnaire.pojo.MonitorPoint">
+  		select * from monitorpoint where mptName like concat(concat("%",#{mptName}),"%")
+  	</select>
+  	
+  	<select id="selImgsByMptName" parameterType="java.util.Map" resultType="cn.kepu.questionnaire.pojo.ShotCutImg">
+  		select * from shotcutimage
+  		<where>
+  			mptId in
+  			<foreach collection="mpts" index="index" item="mpt" open="(" separator="," close=")">  
+       			#{mpt.mptId}  
+    		</foreach>
+    		<if test="scImgType != 3">
+				and scImgType = #{scImgType}
+			</if>
+			<if test="startDate != '' and endDate == ''">
+				and date(createTime) &gt; #{startDate}
+			</if>
+			<if test="startDate == '' and endDate != ''">
+				and date(createTime) &lt; #{endDate}
+			</if>
+			<if test="startDate != '' and endDate != ''">
+			    and date(createTime) between #{startDate} and #{endDate}
+			</if>  				
+  		</where>
+  	</select>
+  	
+  	<select id="selImgsByTypeNDate" resultType="cn.kepu.questionnaire.pojo.ShotCutImg">
+  		select * from shotcutimage
+		<trim prefix="where" prefixOverrides="and | or | between">
+	  		<if test="scImgType != 3">
+				and scImgType = #{scImgType}
+			</if>
+			<if test="startDate != '' and endDate == ''">
+				and date(createTime) &gt; #{startDate}
+			</if>
+			<if test="startDate == '' and endDate != ''">
+				and date(createTime) &lt; #{endDate}
+			</if>
+			<if test="startDate != '' and endDate != ''">
+			    and date(createTime) between #{startDate} and #{endDate}
+			</if>
+		</trim> 	
+  	</select>	
+		
+<!-- Delete Part -->
+
+	<delete id="delImgByID" parameterType="java.lang.Integer">
+		delete from shotcutimage where scImgId = #{scImgId}
+	</delete>	
+ 
+<!-- Insert Part -->
+  
+  		
+ 
+ 
+<!-- Update Part -->
+  
+</mapper>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kepu.questionnaire.dao.IMoniterVideoDao" >
+
+<!-- 这个mapper其实应该叫VideoMapper，这里使用到的类不只是监控视频，还包括报警视频和手工录制视频
+     由于监控点的功能过于简单，所以这里也含有部分监控点的Mapper -->
+
+<!-- ResultMap settings -->
+
+		<resultMap id="mVidDetInfo" type="cn.kepu.questionnaire.pojo.VideoDetInfo">
+			<id property="vidID" column="mVidId" />
+			<result property="vidName" column="mVidName"/>
+			<result property="startTime" column="mVidGrnTime"/>
+			<result property="mptId" column="mptId"/>
+		</resultMap>
+		
+		<resultMap id="rVidDetInfo" type="cn.kepu.questionnaire.pojo.VideoDetInfo">
+			<id property="vidID" column="rVidId" />
+			<result property="vidName" column="rVidName"/>
+			<result property="startTime" column="startTime"/>
+			<result property="mptId" column="mptId"/>
+		</resultMap>
+		
+		<resultMap id="aVidDetInfo" type="cn.kepu.questionnaire.pojo.VideoDetInfo">
+			<id property="vidID" column="aVidId" />
+			<result property="vidName" column="aVidName"/>
+			<result property="startTime" column="startTime"/>
+			<result property="mptId" column="mptId"/>
+			<result property="aRecId" column="aRecId"/>
+		</resultMap>
+		
+		<resultMap id="mptDetInfo" type="cn.kepu.questionnaire.pojo.VideoDetInfo">
+			<result property="mptName" column="mptName"/>
+			<result property="mptIP" column="mptIP"/>
+			<result property="lattitude" column="lattitude"/>
+			<result property="longtitude" column="longtitude"/>
+			<result property="height" column="height"/>
+		</resultMap>
+		
+		<resultMap id="selMptWithmVids" type="cn.kepu.questionnaire.pojo.MonitorPoint">
+			<id property="mptId" column="mptId" />
+			<collection property="moniterVideos" column="mptId" ofType="cn.kepu.questionnaire.pojo.MoniterVideo" 
+			select="cn.kepu.questionnaire.dao.IMoniterVideoDao.selSinmVidAllInfoByMptID"/>
+			<collection property="recordVideos" column="mptId" ofType="cn.kepu.questionnaire.pojo.RecordVideo" 
+			select="cn.kepu.questionnaire.dao.IMoniterVideoDao.selSinrVidAllInfoByMptID"/>
+			<collection property="alarmVideos" column="mptId" ofType="cn.kepu.questionnaire.pojo.AlarmVideo" 
+			select="cn.kepu.questionnaire.dao.IMoniterVideoDao.selSinaVidAllInfoByMptID"/>
+		</resultMap>
+
+<!-- Sql settings -->
+
+<!-- Select Part -->
+
+		<select id="selSigVid" resultType="cn.kepu.questionnaire.pojo.MoniterVideo">
+				select * from monitervideo where mVidId = 1
+ 	 	</select>
+ 	 	
+ 	 	<select id="selSinmVidAllInfoByMptID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.MoniterVideo">
+ 	 			select * from monitervideo where mptId = #{mptId} 	 	
+ 	 	</select>
+ 	 	
+ 	 	<select id="selSinrVidAllInfoByMptID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.RecordVideo">
+ 	 			select * from recordvideo where mptId = #{mptId} 	 	
+ 	 	</select>
+ 	 	
+ 	 	<select id="selSinaVidAllInfoByMptID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.AlarmVideo">
+ 	 			select * from alarmvideo where mptId = #{mptId} 	 	
+ 	 	</select>
+ 	 	
+ 	 	
+ 	 	<!-- 以下皆是为了查询视频详情 -->
+ 	 	<select id="selSigmVidByID" parameterType="java.lang.Integer" resultMap="mVidDetInfo">
+ 	 			select mVidName,mVidGrnTime,mptId from monitervideo where mVidId = #{vidID} 	 	
+ 	 	</select>
+ 	 	
+ 	 	<select id="selSigrVidByID" parameterType="java.lang.Integer" resultMap="rVidDetInfo">
+ 	 			select rVidName,startTime,mptId from recordvideo where rVidId = #{vidID} 	 	
+ 	 	</select>
+ 	 	
+ 	 	<select id="selSigaVidByID" parameterType="java.lang.Integer" resultMap="aVidDetInfo">
+ 	 			select aVidName,startTime,mptId,aRecId from alarmvideo where aVidId = #{vidID} 	 	
+ 	 	</select>
+ 	 	
+ 	 	<select id="selSigMptByID" parameterType="java.lang.Integer" resultMap="mptDetInfo">
+ 	 			select mptIP,mptName,lattitude,longtitude,height from monitorpoint where mptId = #{mptId}
+ 	 	</select>
+ 	 	
+ 	 	
+ 	 	<!-- 以上皆是为了查询视频详情 -->
+ 	 	
+ 	 	
+ 	 	<select id="selAllmVids" resultType="cn.kepu.questionnaire.pojo.MoniterVideo">
+				select * from monitervideo
+ 	 	</select>
+ 	 	
+ 	 	
+ 	 	<select id="selSrchResultByDate" parameterType="cn.kepu.questionnaire.pojo.SrchBody" resultType="cn.kepu.questionnaire.pojo.MoniterVideo">
+ 	 			select * from monitervideo where date(mVidGrnTime) between #{startDate} and #{endDate}
+ 	 	</select>
+ 	 	
+ 	 	<select id="selrSrchResultByDate" parameterType="cn.kepu.questionnaire.pojo.SrchBody" resultType="cn.kepu.questionnaire.pojo.RecordVideo">
+ 	 			select * from recordvideo where date(startTime) between #{startDate} and #{endDate}
+ 	 	</select>
+ 	 	
+ 	 	<select id="selaSrchResultByDate" parameterType="cn.kepu.questionnaire.pojo.SrchBody" resultType="cn.kepu.questionnaire.pojo.AlarmVideo">
+ 	 			select * from alarmvideo where date(startTime) between #{startDate} and #{endDate}
+ 	 	</select>
+ 	 	
+ 	 	
+ 	 	
+<!--                   换血 ！！！！！                                                      -->	 	
+ 	
+ 	 	<select id="GselmVids" parameterType="cn.kepu.questionnaire.pojo.SrchBody" resultType="cn.kepu.questionnaire.pojo.MoniterVideo">
+ 	 			select * from monitervideo 	 			
+ 	 			<trim prefix="where" prefixOverrides="and | or | between">
+ 					<if test="startDate != null and endDate == null">
+ 						date(mVidGrnTime) &gt; #{startDate}
+ 					</if>
+					<if test="startDate == null and endDate != null">
+						date(mVidGrnTime) &lt; #{endDate}
+					</if>
+					<if test="startDate != null and endDate != null">
+					    date(mVidGrnTime) between #{startDate} and #{endDate}
+					</if>
+				</trim>
+ 	 	</select>
+ 	 	 	 	
+ 	 	<select id="GselrVids" parameterType="cn.kepu.questionnaire.pojo.SrchBody" resultType="cn.kepu.questionnaire.pojo.RecordVideo">
+ 	 			select * from recordvideo 	 			
+ 	 			<trim prefix="where" prefixOverrides="and | or | between">
+ 					<if test="startDate != null and endDate == null">
+ 						date(startTime) &gt; #{startDate}
+ 					</if>
+					<if test="startDate == null and endDate != null">
+						date(startTime) &lt; #{endDate}
+					</if>
+					<if test="startDate != null and endDate != null">
+					    date(startTime) between #{startDate} and #{endDate}
+					</if>
+				</trim>
+ 	 	</select>
+ 	 	
+ 	 	<select id="GselaVids" parameterType="cn.kepu.questionnaire.pojo.SrchBody" resultType="cn.kepu.questionnaire.pojo.AlarmVideo">
+ 	 			select * from alarmvideo 	 			
+ 	 			<trim prefix="where" prefixOverrides="and | or | between">
+ 					<if test="startDate != null and endDate == null">
+ 						date(startTime) &gt; #{startDate}
+ 					</if>
+					<if test="startDate == null and endDate != null">
+						date(startTime) &lt; #{endDate}
+					</if>
+					<if test="startDate != null and endDate != null">
+					    date(startTime) between #{startDate} and #{endDate}
+					</if>
+				</trim>
+ 	 	</select>
+ 	 	
+ 	 	<select id="GselVidsByMptIP" parameterType="cn.kepu.questionnaire.pojo.SrchBody" resultMap="selMptWithmVids">
+ 	 		select mptId from monitorpoint where mptIP = #{mptInfo}
+ 	 	</select>
+ 	<!--                   换血 ！！！！！                                                      --> 
+ 		 			
+ 	 	
+ 	 	<select id="selmptsWithName" parameterType="cn.kepu.questionnaire.pojo.SrchBody" resultType="cn.kepu.questionnaire.pojo.MonitorPoint">
+ 	 			select * from monitorpoint where mptName like "%"#{mptInfo}"%"
+ 	 	</select>
+ 	 	
+ 	 	<select id="selMvideoCount" resultType="java.lang.Integer">
+ 	 		select count(*) from monitervideo	
+ 	 	</select>
+ 	 	
+ 	 	<select id="selRvideoCount" resultType="java.lang.Integer">
+ 	 		select count(*) from recordvideo
+ 	 	</select>
+ 	 	
+ 	 	<select id="selAvideoCount" resultType="java.lang.Integer">
+ 	 		select count(*) from alarmvideo
+ 	 	</select>
+ 	 	
+<!-- Delete Part -->
+
+		<delete id="delmVid" parameterType="cn.kepu.questionnaire.pojo.SrchBody">
+			delete from monitervideo where mVidId = #{vidId}
+		</delete>
+		
+		<delete id="delrVid" parameterType="cn.kepu.questionnaire.pojo.SrchBody">
+			delete from recordvideo where rVidId = #{vidId}
+		</delete>
+		
+		<delete id="delaVid" parameterType="cn.kepu.questionnaire.pojo.SrchBody">
+			delete from alarmvideo where aVidId = #{vidId}
+		</delete>
+
+		<insert id="insertVid" parameterType="cn.kepu.questionnaire.pojo.MoniterVideo">
+			insert into monitervideo (mVidName,mVidGrnTime,mVidUrl,mSkchImgUrl,mptId) values(
+			#{mVidName},
+			#{mVidGrnTime},
+			#{mVidUrl},
+			#{mSkchImgUrl},
+			#{mptId}
+			)
+		</insert>
+ 
+<!-- Insert Part -->
+  
+  		
+ 
+ 
+<!-- Update Part -->
+  
+</mapper>

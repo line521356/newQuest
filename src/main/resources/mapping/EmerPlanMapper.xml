@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kepu.questionnaire.dao.IEmerPlanDao" >
+<!-- 预案管理、扑救资源管理的SQL语句 -->
+<!-- ResultMap settings -->
+
+		
+		
+
+<!-- Sql settings -->
+
+<!-- Select Part -->
+
+		<select id="selRtMapByStEdID" parameterType="java.lang.Integer" resultType="java.lang.String">
+			select passbyRtID from routemap where stRtID = #{stRtID} and endRtID = #{endRtID}
+		</select>
+		
+		<select id="selCrewNameByCrId" parameterType="java.lang.Integer" resultType="java.lang.String">
+			select crewName	from crew where crewID = #{stRtID}
+		</select>
+		
+		<select id="selCrewNameByRtId" parameterType="java.lang.Integer" resultType="java.lang.String">
+			select crewName	from crew where rtID = #{rtID}
+		</select>
+		
+		<select id="selRrtIDByCrId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+			select rtID	from crew where crewID = #{crewID}
+		</select>
+		
+		<select id="selMatByRtId" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Material">
+			select * from material where rtID = #{rtID}
+		</select>
+		
+		<select id="selWatByRtId" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.WaterSource">
+			select * from watersource where rtID = #{rtID}
+		</select>
+		
+		<select id="selAllPlans" resultType="cn.kepu.questionnaire.pojo.EmergencyPlan">
+			select * from emergencyplan
+		</select>
+		
+	    <select id="selTimeNLen" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Route">
+			select rtTime,rtLength from route where rtID = #{rtID}
+		</select>
+		
+		<select id="selPlansByName" parameterType="java.lang.String" resultType="cn.kepu.questionnaire.pojo.EmergencyPlan">
+			select * from emergencyplan where planName like concat(concat("%",#{planName}),"%")
+		</select>
+		
+		<select id="selMatsByName" parameterType="java.lang.String" resultType="cn.kepu.questionnaire.pojo.Material">
+			select * from material where matName like concat(concat("%",#{matName}),"%")
+		</select>
+		
+		<select id="selWatsByName" parameterType="java.lang.String" resultType="cn.kepu.questionnaire.pojo.WaterSource">
+			select * from watersource where watSrName like concat(concat("%",#{watSrName}),"%")
+		</select>
+		
+		<select id="selCrewByName" parameterType="java.lang.String" resultType="cn.kepu.questionnaire.pojo.Crew">
+			select * from crew where crewName like concat(concat("%",#{crewName}),"%")
+		</select>
+
+		<select id="selAllMats" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Material">
+			select * from material
+		</select>
+		
+		<select id="selAllWats" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.WaterSource">
+			select * from watersource
+		</select>
+		
+		<select id="selAllCrew" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Crew">
+			select * from crew
+		</select>
+		
+		<select id="selLocBySrcID" resultType="cn.kepu.questionnaire.pojo.Location">
+			select pointID,pointX,pointY,sptOrdInRt from location where zmLev = 1 and sptOrdInRt = #{srcID} and ptType = 2 
+		</select>
+		
+		<select id="selLocByWatID" resultType="cn.kepu.questionnaire.pojo.Location">
+			select pointID,pointX,pointY,sptOrdInRt from location where zmLev = 1 and sptOrdInRt = #{srcID} and ptType = 3 
+		</select>
+		
+		<select id="selLocByCrewID" resultType="cn.kepu.questionnaire.pojo.Location">
+			select pointID,pointX,pointY,sptOrdInRt from location where zmLev = 1 and sptOrdInRt = #{srcID} and ptType = 4 
+		</select>
+		
+		<select id="selFirstPtInRt" resultType="cn.kepu.questionnaire.pojo.Location">
+			select pointX,pointY from location where rtID = #{rtID} and zmLev = #{zmLev} and ptType = 1 and sptOrdInRt = 1 
+		</select>
+
+<!-- Delete Part -->
+
+	    <delete id="delPlanByID" parameterType="java.lang.Integer">
+			delete from emergencyplan where planID = #{planID}
+		</delete>
+		
+	    <delete id="delMatByID" parameterType="java.lang.Integer">
+			delete from material where matID = #{matID}
+		</delete>
+		
+	    <delete id="delWatByID" parameterType="java.lang.Integer">
+			delete from watersource where watSrID = #{watSrID}
+		</delete>
+		
+		<delete id="delCrewByID" parameterType="java.lang.Integer">
+			delete from crew where crewID = #{crewID}
+		</delete>
+ 
+<!-- Insert Part -->
+
+	   <insert id="istNewPlan" parameterType="cn.kepu.questionnaire.pojo.EmergencyPlan" 
+			useGeneratedKeys="true" keyProperty="planID">
+			insert into emergencyplan(planName,planIntro,targetRtID,priority,routes,materials,watersource,crew,arrTime,rtsLen,wdFrcRst,tempRst,timeRst)
+			values(#{planName},#{planIntro},#{targetRtID},#{priority},#{routes},#{materials},#{watersource},#{crew},#{arrTime},#{rtsLen},#{wdFrcRst},#{tempRst},#{timeRst})
+	   </insert>
+	   
+	   	<insert id="istNewMat" parameterType="cn.kepu.questionnaire.pojo.Material" 
+			useGeneratedKeys="true" keyProperty="matID">
+			insert into material(matName,ffSuit,GpsDevice,transCar,dynamotor,waterPipe,rtID)
+			values(#{matName},#{ffSuit},#{gpsDevice},#{transCar},#{dynamotor},#{waterPipe},#{rtID})
+	   </insert> 
+	   
+	   <insert id="istNewWat" parameterType="cn.kepu.questionnaire.pojo.WaterSource" 
+			useGeneratedKeys="true" keyProperty="watSrID">
+			insert into watersource(watSrName,watSrType,watQuantity,rtID)
+			values(#{watSrName},#{watSrType},#{watQuantity},#{rtID})
+	   </insert> 
+	   
+	   <insert id="istNewCrew" parameterType="cn.kepu.questionnaire.pojo.Crew" 
+			useGeneratedKeys="true" keyProperty="crewID">
+			insert into crew(crewName,headCount,crewType,leader,rtID)
+			values(#{crewName},#{headCount},#{crewType},#{leader},#{rtID})
+	   </insert>   
+ 
+<!-- Update Part -->
+
+	   <update id="updatePlan" parameterType="cn.kepu.questionnaire.pojo.EmergencyPlan" >
+		    update emergencyplan set
+		    planName = #{planName,jdbcType=VARCHAR},
+		    planIntro = #{planIntro,jdbcType=VARCHAR},
+		    targetRtID = #{targetRtID,jdbcType=VARCHAR},
+		    priority = #{priority,jdbcType=VARCHAR},
+		    routes = #{routes,jdbcType=VARCHAR},
+		    materials = #{materials,jdbcType=VARCHAR},
+		    watersource = #{watersource,jdbcType=VARCHAR},
+		    crew = #{crew,jdbcType=VARCHAR},
+		    arrTime = #{arrTime,jdbcType=VARCHAR},
+		    rtsLen = #{rtsLen,jdbcType=VARCHAR},
+		    wdFrcRst = #{wdFrcRst,jdbcType=VARCHAR},
+		    tempRst = #{tempRst,jdbcType=VARCHAR},
+		    timeRst= #{timeRst,jdbcType=VARCHAR} 
+		    where planID = #{planID,jdbcType=INTEGER}
+ 	   </update>
+ 	   
+ 	   <update id="updateMat" parameterType="cn.kepu.questionnaire.pojo.Material" >
+		    update material set
+		    matName = #{matName,jdbcType=VARCHAR},
+		    ffSuit = #{ffSuit,jdbcType=INTEGER},
+		    GpsDevice = #{gpsDevice,jdbcType=INTEGER},
+		    transCar = #{transCar,jdbcType=INTEGER},
+		    dynamotor = #{dynamotor,jdbcType=INTEGER},
+		    waterPipe = #{waterPipe,jdbcType=INTEGER},
+		    rtID = #{rtID,jdbcType=INTEGER} 
+		    where matID = #{matID,jdbcType=INTEGER}
+ 	   </update>
+ 	   
+ 	    <update id="updateWat" parameterType="cn.kepu.questionnaire.pojo.WaterSource" >
+		    update watersource set
+		    watSrName = #{watSrName,jdbcType=VARCHAR},
+		    watSrType = #{watSrType,jdbcType=VARCHAR},
+		    watQuantity = #{watQuantity,jdbcType=VARCHAR},
+		    rtID = #{rtID,jdbcType=INTEGER} 
+		    where watSrID = #{watSrID,jdbcType=INTEGER}
+ 	   </update>
+ 	   
+ 	   <update id="updateCrew" parameterType="cn.kepu.questionnaire.pojo.Crew" >
+		    update crew set
+		    crewName = #{crewName,jdbcType=VARCHAR},
+		    headCount = #{headCount,jdbcType=INTEGER},
+		    crewType = #{crewType,jdbcType=VARCHAR},
+		    leader = #{leader,jdbcType=VARCHAR},
+		    rtID = #{rtID,jdbcType=INTEGER} 
+		    where crewID = #{crewID,jdbcType=INTEGER}
+ 	   </update>
+ 	   
+ 	   <update id="updateLoc" parameterType="cn.kepu.questionnaire.pojo.Location" >
+		    update location set
+		    pointX = #{pointX,jdbcType=INTEGER},
+		    pointY = #{pointY,jdbcType=INTEGER},
+		    zmLev = #{zmLev,jdbcType=INTEGER},
+		    rtID = #{rtID,jdbcType=INTEGER}  
+		    where pointID = #{pointID,jdbcType=INTEGER}
+ 	   </update>
+ 	   
+ 	   <update id="updateLocByZlNSrcID" parameterType="cn.kepu.questionnaire.pojo.Location" >
+		    update location set 
+		    pointX = #{pointX,jdbcType=INTEGER},
+		    pointY = #{pointY,jdbcType=INTEGER},
+		    rtID = #{rtID,jdbcType=INTEGER} 
+		    where zmLev = #{zmLev,jdbcType=INTEGER} 
+		    and sptOrdInRt = #{sptOrdInRt,jdbcType=INTEGER} 
+		    and ptType = #{ptType,jdbcType=INTEGER}
+ 	   </update>	   
+  
+</mapper>

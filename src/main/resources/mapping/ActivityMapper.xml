@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kepu.questionnaire.dao.IActivityDao" >
+
+
+
+<!-- ResultMap settings -->
+
+<!-- Sql settings -->
+
+<!-- Select Part -->
+
+		<select id="selAllActs" resultType="cn.kepu.questionnaire.pojo.Activity">
+				select * from activity
+ 	 	</select>
+ 	 		
+<!-- Delete Part -->
+ 
+<!-- Insert Part -->
+  
+  		<insert id="istAct" parameterType="cn.kepu.questionnaire.pojo.Activity" 
+ 				useGeneratedKeys="true" keyProperty="actId">
+ 			insert into activity(actName,actIntro,actSpsDat,actEndDat,actPicUrl)
+ 			values(#{actName},#{actIntro},#{actSpsDat},#{actEndDat},#{actPicUrl})
+ 		</insert> 
+ 
+ 
+ 
+<!-- Update Part -->
+  
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kepu.questionnaire.dao.IAlarmRecordDao" >
+
+
+
+<!-- ResultMap settings -->
+
+		<resultMap id="VidDetInfo" type="cn.kepu.questionnaire.pojo.VideoDetInfo">
+			<result property="alarmTime" column="alarmTime"/>
+			<result property="isConfirm" column="isConfirm"/>
+			<result property="isAlarmed" column="isAlarmed"/>
+		</resultMap>
+		
+<!-- Sql settings -->
+
+<!-- Select Part -->
+
+		<select id="selIsAlarming" resultType="java.lang.Integer">
+				select aRecId from alarmrecord where isAlarming = 1
+ 	 	</select>
+ 	 	
+ 	 	<select id="selUnposRecs" resultType="cn.kepu.questionnaire.pojo.AlarmRecord">
+				select * from alarmrecord where isConfirm = 0
+ 	 	</select>
+ 	 	
+ 	 	<select id="selSigaRecByID" resultMap="VidDetInfo">
+ 	 			select alarmTime,isConfirm,isAlarmed from alarmrecord where aRecId = #{aRecId}
+ 	 	</select>
+ 	 	
+ 	 	<select id="selAlrmRecs" resultType="cn.kepu.questionnaire.pojo.AlarmRecord">
+ 	 			select 
+ 	 			mpt.mptName,
+ 	 			arec.alarmTime, 
+ 	 			arec.optLattitude,
+ 	 			arec.optLongtitude,
+ 	 			arec.optHeight,
+ 	 			arec.isConfirm 
+ 	 			from alarmrecord arec, monitorpoint mpt 
+ 	 			where arec.mptId = mpt.mptId and arec.isAlarming = 1	 			
+ 	 	</select>
+ 	 	
+ 	 	<select id="selUnhandledRecs" resultType="cn.kepu.questionnaire.pojo.AlarmRecord">
+ 	 			select 
+ 	 			mpt.mptName,
+ 	 			arec.aRecId,
+ 	 			arec.alarmTime, 
+ 	 			arec.optLattitude,
+ 	 			arec.optLongtitude,
+ 	 			arec.optHeight,
+ 	 			arec.isConfirm,
+ 	 			arec.name,
+ 	 			arec.phone
+ 	 			from alarmrecord arec, monitorpoint mpt 
+ 	 			where arec.mptId = mpt.mptId and arec.isConfirm = 1	 			
+ 	 	</select>
+ 	 	
+ 	 	<select id="selHandledRecs" resultType="cn.kepu.questionnaire.pojo.AlarmRecord">
+ 	 			select 
+ 	 			mpt.mptName,
+ 	 			arec.alarmTime, 
+ 	 			arec.optLattitude,
+ 	 			arec.optLongtitude,
+ 	 			arec.optHeight,
+ 	 			arec.isConfirm 
+ 	 			from alarmrecord arec, monitorpoint mpt 
+ 	 			where arec.mptId = mpt.mptId and arec.isConfirm = 2	 			
+ 	 	</select>
+ 	 	
+ 	 	 <select id="selErrRecs" resultType="cn.kepu.questionnaire.pojo.AlarmRecord">
+ 	 			select 
+ 	 			mpt.mptName,
+ 	 			arec.alarmTime, 
+ 	 			arec.optLattitude,
+ 	 			arec.optLongtitude,
+ 	 			arec.optHeight,
+ 	 			arec.isConfirm 
+ 	 			from alarmrecord arec, monitorpoint mpt 
+ 	 			where arec.mptId = mpt.mptId and arec.isConfirm = -1	 			
+ 	 	</select>
+ 	 		
+<!-- Delete Part -->
+ 
+<!-- Insert Part -->
+  
+  		<insert id="istAct" parameterType="cn.kepu.questionnaire.pojo.Activity" 
+ 				useGeneratedKeys="true" keyProperty="actId">
+ 			insert into activity(actName,actIntro,actSpsDat,actEndDat,actPicUrl)
+ 			values(#{actName},#{actIntro},#{actSpsDat},#{actEndDat},#{actPicUrl})
+ 		</insert> 
+ 
+ 
+ 
+<!-- Update Part -->
+
+		<update id="udtAlmStatusToStart" parameterType="java.lang.Integer">  
+	        update alarmrecord set isAlarming = 1 
+	        where aRecId = #{aRecId}
+		</update> 
+		
+		<update id="udtAlmStatusToStop" parameterType="java.lang.Integer">  
+	        update alarmrecord set isAlarming = 0 
+	        where aRecId = #{aRecId}
+		</update>
+		
+		<update id="udtAlmStatusToCancel" parameterType="java.lang.Integer">  
+	        update alarmrecord set isConfirm = 2 
+	        where aRecId = #{aRecId}
+		</update>
+		
+		<update id="updateRecAftLoc" parameterType="cn.kepu.questionnaire.pojo.AlarmRecord" >
+		    update alarmrecord set
+		    optLattitude = #{optLattitude,jdbcType=DOUBLE},
+		    optLongtitude = #{optLongtitude,jdbcType=DOUBLE},
+		    isConfirm = #{isConfirm,jdbcType=INTEGER}   
+		    where aRecId = #{aRecId,jdbcType=INTEGER}
+ 	   </update>
+  
+</mapper>

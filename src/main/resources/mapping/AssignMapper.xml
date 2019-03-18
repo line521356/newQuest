@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kepu.questionnaire.dao.IAssignDao" >
+
+
+
+<!-- ResultMap settings -->
+ 
+  	<resultMap id="OrgWithPrOrg" type="cn.kepu.questionnaire.pojo.EosorgTOrganization" >
+  		<id property="orgId" column="orgID" />
+  		<result property="orgName" column="orgName"/>
+  		<association property="parent" column="parentOrgID" 
+  		select="cn.kepu.questionnaire.dao.IAssignDao.selPrOrgById"
+  		javaType="cn.kepu.questionnaire.pojo.EosorgTOrganization"> 		
+  		</association>
+  	</resultMap>
+  	
+
+<!-- Sql settings -->
+  
+
+
+<!-- Select Part -->
+  
+  
+  	<!-- 这里并不是一般的根据ID查找对象，而是用来查找父组织的 -->
+  	<select id="selPrOrgById" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.EosorgTOrganization">
+  		select * from eosorg_t_organization where orgID = #{parentOrgID}
+  	</select>
+  	
+  
+	<select id="selOrgByIdWithPrOrg" resultMap="OrgWithPrOrg">
+  		select * from eosorg_t_organization 
+  		where orgID = #{orgID}
+  	</select>
+  	
+  	
+  	<select id="selChilOrgsByPrId"  parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.EosorgTOrganization">
+  		select * from eosorg_t_organization 
+  		where parentOrgID = #{orgId}  	
+  	</select>
+  	
+  	<select id="selAssnDeptsByQsnrId"  parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.TnAssignDept">
+  		select * from tn_assigndept 
+  		where basicInfoID = #{QsnrId}  	
+  	</select>
+  	
+  	
+  	<!-- 普通根据ID返回对应对象 -->
+  	<select id="selOrgById"  parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.EosorgTOrganization">
+  		select * from eosorg_t_organization 
+  		where orgID = #{orgId}  	
+  	</select>
+  	
+  	
+
+ 
+
+
+  
+<!-- Delete Part -->
+ 
+
+
+
+<!-- Insert Part -->
+  
+  		<insert id="istAssnDep" parameterType="cn.kepu.questionnaire.pojo.TnAssignDept" 
+ 				useGeneratedKeys="true" keyProperty="ID">
+ 			insert into tn_assigndept(basicInfoID,deptID)
+ 			values(#{tnNeedsQuestionnaire.ID},#{dept.orgId})
+ 		</insert> 
+ 
+ 
+ 
+<!-- Update Part -->
+  
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kepu.questionnaire.mapping.EmployeeMapper" >
+
+
+
+<!-- ResultMap settings -->
+ 
+  
+
+<!-- Sql settings -->
+  
+
+
+<!-- Select Part -->
+  
+  	<select id="selectEmpByOpId" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.EosorgTEmployee">
+  		select * from eosorg_t_employee where operatorID = #{operatorID}
+  	</select>
+  
+
+
+ 
+
+
+  
+<!-- Delete Part -->
+ 
+
+
+
+<!-- Insert Part -->
+  
+  
+ 
+ 
+ 
+<!-- Update Part -->
+  
+</mapper>

@@ -55,6 +55,7 @@ pagehelper:
   params: count=countSql
 live:
   rtmp-url: rtmp://localhost/live/test
+  rtsp-url: rtsp://localhost/test
   backup-path: E:\\static\\backupVideo\\
   backup-path-virtual: EpicWorkVideos/mVids/
   pic-path: E:\\static\\video-pic\\

@@ -9,7 +9,7 @@
 <body>
 <div id="content">
     <video id="rtmpVideo" class="video-js vjs-default-skin vjs-big-play-centered" width="1366" height="768">
-        <source src="rtmp://localhost/live/test" type="rtmp/flv">
+        <source src="${url}" type="rtmp/flv">
         <p class="vjs-no-js">
             您的浏览器不支持HTML5，请升级浏览器。
         </p>

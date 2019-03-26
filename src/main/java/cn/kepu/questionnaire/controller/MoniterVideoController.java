@@ -128,7 +128,7 @@ public class MoniterVideoController {
 		}
 		
 		//指定视频类型搜索
-		List<Object> DsrchRsltVideos = moniterVideoService.getDSrchResult(srchBody);		
+		List<Object> DsrchRsltVideos = moniterVideoService.getDSrchResult(srchBody);
 		return DsrchRsltVideos;
 	}
 		

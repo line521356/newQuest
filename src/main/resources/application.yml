@@ -54,7 +54,7 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 live:
-  rtmp-url: rtmp://localhost/live/test
+  rtmp-url: rtmp://localhost/live/
   backup-path: E:\\static\\backupVideo\\
   backup-path-virtual: EpicWorkVideos/mVids/
   pic-path: E:\\static\\video-pic\\

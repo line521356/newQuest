@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Component
+//@Component
 public class LiveVideoBackUpScheduled {
 
     @Value("${live.rtmp-url}")

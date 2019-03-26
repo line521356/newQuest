@@ -58,7 +58,7 @@
  	 	<select id="selSinmVidAllInfoByMptID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.MoniterVideo">
  	 			select * from monitervideo where mptId = #{mptId} 	 	
  	 	</select>
- 	 	
+
  	 	<select id="selSinrVidAllInfoByMptID" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.RecordVideo">
  	 			select * from recordvideo where mptId = #{mptId} 	 	
  	 	</select>
@@ -89,7 +89,11 @@
  	 	<!-- 以上皆是为了查询视频详情 -->
  	 	
  	 	
- 	 	<select id="selAllmVids" resultType="cn.kepu.questionnaire.pojo.MoniterVideo">
+ 	 	<select id="getAllMonitorPoint" resultType="cn.kepu.questionnaire.pojo.MonitorPoint">
+				select * from monitorpoint
+ 	 	</select>
+
+	<select id="selAllmVids" resultType="cn.kepu.questionnaire.pojo.MoniterVideo">
 				select * from monitervideo
  	 	</select>
  	 	

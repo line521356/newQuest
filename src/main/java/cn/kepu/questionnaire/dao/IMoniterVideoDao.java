@@ -60,5 +60,7 @@ public interface IMoniterVideoDao {
 	Integer selAvideoCount();
 
 	void insertVid(MoniterVideo moniterVideo);
+
+	List <MonitorPoint> getAllMonitorPoint();
 	
 }

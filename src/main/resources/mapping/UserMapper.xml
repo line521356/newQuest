@@ -61,7 +61,7 @@
   </select>
 
   <select id="selAllUsers" resultType="cn.kepu.questionnaire.pojo.GnrUser">
-	select gnrUserId,gnrUserName,gusClassName,gusGrade,userGroup,userEmail,userPhone from gnruser
+	select gnrUserId,gnrUserName,gusClassName,gusGrade,userGroup,userEmail,userPhone,wechatName from gnruser
   </select>
   
   <select id="selUsersByName" parameterType="java.lang.String" resultType="cn.kepu.questionnaire.pojo.GnrUser">
@@ -174,8 +174,8 @@
   
   <insert id="istNewUser" parameterType="cn.kepu.questionnaire.pojo.GnrUser" 
   useGeneratedKeys="true" keyProperty="gnrUserId">
-		insert into gnruser(gnrUserName,gnrUserPwd,gusClassName,gusGrade,userRight,userGroup,userEmail,userPhone)
-		values(#{gnrUserName},#{gnrUserPwd},#{gusClassName},#{gusGrade},#{userRight},#{userGroup},#{userEmail},#{userPhone})
+		insert into gnruser(gnrUserName,gnrUserPwd,gusClassName,gusGrade,userRight,userGroup,userEmail,userPhone,wechatName)
+		values(#{gnrUserName},#{gnrUserPwd},#{gusClassName},#{gusGrade},#{userRight},#{userGroup},#{userEmail},#{userPhone},#{wechatName})
   </insert>
   
   <insert id="insert" parameterType="cn.kepu.questionnaire.pojo.User" >
@@ -250,7 +250,8 @@
 		    userRight = #{userRight,jdbcType=INTEGER},
 		    userGroup = #{userGroup,jdbcType=VARCHAR},
 		    userEmail = #{userEmail,jdbcType=VARCHAR},
-		    userPhone = #{userPhone,jdbcType=VARCHAR} 
+		    userPhone = #{userPhone,jdbcType=VARCHAR} ,
+		    wechatName = #{wechatName,jdbcType=VARCHAR}
 		    where gnrUserId = #{gnrUserId,jdbcType=INTEGER}
    </update>
   

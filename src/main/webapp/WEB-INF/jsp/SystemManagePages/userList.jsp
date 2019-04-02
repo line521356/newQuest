@@ -105,6 +105,7 @@
 			       	      ,{field: 'gusClassName', title: '部门', sort: true}
 			       	      ,{field: 'gusGrade', title: '入职年份', sort: true} 
 			       	      ,{field: 'userGroup', title: '用户组', sort: true}
+			       	      ,{field: 'wechatName', title: '微信名', sort: true}
 			       	      ,{align: 'center', title: '操作', width: 350, toolbar: '#barDemo'}
 				    ]]
 				  });

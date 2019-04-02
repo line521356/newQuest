@@ -289,14 +289,13 @@ public class FfmpegUtil {
         } else {
             System.out.println("没有取到第一帧");
         }
-        //如果想要保存图片,可以使用 opencv_imgcodecs.cvSaveImage("hello.jpg", grabbedImage);来保存图片
         FrameRecorder recorder;
         try {
             recorder = FrameRecorder.createDefault(outputFile, 1280, 720);
         } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
             throw e;
         }
-        recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264); // avcodec.AV_CODEC_ID_H264
+        recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
         recorder.setFormat("flv");
         recorder.setFrameRate(v_rs);
         recorder.setGopSize(v_rs);
@@ -319,20 +318,7 @@ public class FfmpegUtil {
         }
         System.out.println("开始推流");
 
-//        CanvasFrame frame = new CanvasFrame("camera", CanvasFrame.getDefaultGamma() / grabber.getGamma());
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setAlwaysOnTop(true);
-//        while (frame.isVisible() && (grabframe=grabber.grab()) != null) {
         while ((grabframe = grabber.grab()) != null) {
-            System.out.println("推流...");
-//            frame.showImage(grabframe);
-
-            CanvasFrame frame = new CanvasFrame("camera", CanvasFrame.getDefaultGamma() / grabber.getGamma());
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setAlwaysOnTop(true);
-            while (frame.isVisible() && (grabframe = grabber.grab()) != null) {
-                System.out.println("推流...");
-                frame.showImage(grabframe);
 
                 grabbedImage = converter.convert(grabframe);
                 Frame rotatedFrame = converter.convert(grabbedImage);
@@ -347,13 +333,12 @@ public class FfmpegUtil {
 
                 Thread.sleep(40);
             }
-//        frame.dispose();
-            frame.dispose();
+
             recorder.stop();
             recorder.release();
             grabber.stop();
             System.exit(2);
-        }
+
 
     }
     public static void main(String[] args) {

@@ -66,6 +66,13 @@
 		      <input type="tel" name="userPhone" id="userPhone" placeholder="请输入" autocomplete="off" class="layui-input" lay-verify="required|phone">
 		    </div>
 		  </div>
+
+		<div style="margin-left:1cm;" class="layui-form-item">
+			<label class="layui-form-label">微信名</label>
+			<div class="layui-input-inline">
+				<input type="text" name="wechatName" id="wechatName" placeholder="请输入" autocomplete="off" class="layui-input" lay-verify="required">
+			</div>
+		</div>
 		  		  
 		  <button style="margin-left:5cm;" class="layui-btn" lay-submit="" lay-filter="demo1">确认修改</button>
     	  <button type="reset" class="layui-btn layui-btn-primary">重置</button> 
@@ -107,7 +114,7 @@
 	    //整合所有数据拼成Material对象
 		var req = {"gnrUserName":data.field.gnrUserName, "gnrUserPwd":data.field.gnrUserPwd, 
 	    		"gusClassName":data.field.gusClassName, "gusGrade":data.field.gusGrade, 
-	    		"userEmail":data.field.userEmail, "userPhone":data.field.userPhone}
+	    		"userEmail":data.field.userEmail, "userPhone":data.field.userPhone,"wechatName":data.field.wechatName}
 	    		
 		$.ajax( {
 		     async : false, //这里不开异步，以防点数据赋值混乱

@@ -28,6 +28,8 @@ public class GnrUser implements Serializable{
 	private String userEmail;
 	
 	private String userPhone;
+
+	private String wechatName;
 	
 	
 	public GnrUser() {
@@ -149,4 +151,11 @@ public class GnrUser implements Serializable{
 				+ ", userEmail=" + userEmail + ", userPhone=" + userPhone + "]";
 	}
 
+	public String getWechatName() {
+		return wechatName;
+	}
+
+	public void setWechatName(String wechatName) {
+		this.wechatName = wechatName;
+	}
 }

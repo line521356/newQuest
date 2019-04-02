@@ -238,7 +238,12 @@ public class AlarmRecordServiceImpl implements IAlarmRecordService {
 		}
 		return unhandledRes;
 	}
-	
+
+	@Override
+	public List<AlarmRecord> selAllIsAlarming() {
+		return alarmRecordDao.selAllIsAlarming();
+	}
+
 	/**
 	 * 古德曼函数，返回纬度
 	 * @param distance

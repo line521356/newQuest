@@ -28,5 +28,7 @@ public interface IAlarmRecordDao {
 	void updateRecAftLoc(AlarmRecord alarmRecord);
 	
 	void udtAlmStatusToCancel(AlarmRecord alarmRecord);
+
+	List<AlarmRecord> selAllIsAlarming();
 	
 }

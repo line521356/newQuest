@@ -11,6 +11,10 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+/**
+ * 定时任务录制视频，emmmmmmmm，不录了
+ */
 //@Component
 public class LiveVideoBackUpScheduled {
 

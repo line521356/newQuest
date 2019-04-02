@@ -19,6 +19,10 @@
 		<select id="selIsAlarming" resultType="java.lang.Integer">
 				select aRecId from alarmrecord where isAlarming = 1
  	 	</select>
+
+	<select id="selAllIsAlarming" resultType="cn.kepu.questionnaire.pojo.AlarmRecord">
+				select * from alarmrecord where isAlarming = 1
+ 	 	</select>
  	 	
  	 	<select id="selUnposRecs" resultType="cn.kepu.questionnaire.pojo.AlarmRecord">
 				select * from alarmrecord where isConfirm = 0

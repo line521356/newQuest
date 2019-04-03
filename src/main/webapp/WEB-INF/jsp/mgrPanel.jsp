@@ -5,7 +5,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>森林防火视频监控管理系统</title>
+		<title>森林防火指挥系統</title>
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -32,7 +32,7 @@
 						</div>
 					</div>
 					<img alt="北京林业大学" src="/image/bjfu.jpg" style="position:fixed;left:5px;top:5px;">
-					<span style="font-size: 30px;position:fixed;left:300px;top:11px;color:#228B22;">森林防火视频监控管理系统</span>	
+					<span style="font-size: 30px;position:fixed;left:300px;top:11px;color:#1AA094">森林防火指挥系統</span>
 					<ul class="layui-nav admin-header-item">
 <!-- 						<li class="layui-nav-item"> -->
 <!-- 							<a href="javascript:;">清除缓存</a> -->
@@ -94,8 +94,8 @@
 			</div>
 			<div class="layui-footer footer footer-demo" id="admin-footer">
 				<div class="layui-main">
-					<p>2018 &copy;
-						<a href="#" target="_blank">北京林业大学</a>  Silent Whale 
+					<p>2019 &copy;
+						<a href="#" target="_blank">北京林业大学</a>
 					</p>
 				</div>
 			</div>

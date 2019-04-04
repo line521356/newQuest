@@ -1,32 +1,26 @@
 package cn.kepu.questionnaire.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cn.kepu.questionnaire.pojo.MoniterVideo;
+import cn.kepu.questionnaire.pojo.MonitorPoint;
 import cn.kepu.questionnaire.pojo.SrchBody;
 import cn.kepu.questionnaire.pojo.VideoDetInfo;
+import cn.kepu.questionnaire.service.ILiveService;
 import cn.kepu.questionnaire.service.IMoniterVideoService;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/mVid")
@@ -36,6 +30,9 @@ public class MoniterVideoController {
 	@Autowired
 	@Qualifier("moniterVideoService")
 	private IMoniterVideoService moniterVideoService;
+
+	@Autowired
+	private ILiveService iLiveService;
 	
 	private Log logger = LogFactory.getLog(this.getClass());
 	
@@ -138,5 +135,37 @@ public class MoniterVideoController {
 		response.setContentType("text/html;charset=UTF-8");
 		response.getWriter().write("{\"result\":\"true\"}");    
 		//强行success
+	}
+
+	@ResponseBody
+	@GetMapping("/initSelectParam")
+	public JSONObject initSelectParam(){
+		List <MonitorPoint> monitorPointList = iLiveService.getAllPoint();
+		List <Map <String,String>> videoType = new ArrayList<>() ;
+		Map<String,String> map1 = new HashMap<>();
+		Map<String,String> map2 = new HashMap<>();
+		Map<String,String> map3 = new HashMap<>();
+		Map<String,String> map4 = new HashMap<>();
+		map1.put("code","1");
+		map1.put("name","监控视频");
+
+		map2.put("code","2");
+		map2.put("name","手动录制视频");
+
+		map3.put("code","3");
+		map3.put("name","报警视频");
+
+		map4.put("code","4");
+		map4.put("name","所有视频");
+
+		videoType.add(map1);
+		videoType.add(map2);
+		videoType.add(map3);
+		videoType.add(map4);
+		JSONObject result = new JSONObject();
+		result.put("monitorPointList",monitorPointList);
+		result.put("videoType",videoType);
+		return result;
+
 	}
 }

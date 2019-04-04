@@ -29,7 +29,7 @@
 
 .header-index{background-color: #080018; border: none;}
 
-.layui-layout-admin .header-demo{border-bottom-color: #1AA094; background-color: #fff;}
+.layui-layout-admin .header-demo{border-bottom-color: #3299CC; background-color: #fff;}
 .header-demo .logo{left: 40px;}
 .header-demo .layui-nav{top: 0;}
 .header-demo .layui-nav .layui-nav-item{margin: 0 10px; line-height: 70px;}
@@ -133,7 +133,7 @@ body .layui-layer-dir .layui-layer-content{padding: 10px; max-height: 280px; ove
 .site-tree .layui-tree li a cite{padding: 0 8px;}
 .site-tree .layui-tree .site-tree-noicon a cite{padding-left: 15px;}
 .site-tree .layui-tree li a em{font-size: 12px; color: #bbb; padding-right: 5px; font-style: normal;}
-.site-tree .layui-tree li h2{line-height: 36px; border-left: 5px solid #009E94; margin: 15px 0 5px; padding: 0 10px; background-color: #f2f2f2;}
+.site-tree .layui-tree li h2{line-height: 36px; border-left: 5px solid #3299CC; margin: 15px 0 5px; padding: 0 10px; background-color: #f2f2f2;}
 .site-tree .layui-tree li ul{margin-left: 27px; line-height: 28px;}
 .site-tree .layui-tree li ul a,
 .site-tree .layui-tree li ul a i{color: #777;}
@@ -142,8 +142,8 @@ body .layui-layer-dir .layui-layer-content{padding: 10px; max-height: 280px; ove
 .site-tree .layui-tree li ul li cite,
 .site-tree .layui-tree .site-tree-noicon ul li cite{padding-left: 0;}
 
-.site-tree .layui-tree .layui-this a{color: #01AAED;}
-.site-tree .layui-tree .layui-this .layui-icon{color: #01AAED;}
+.site-tree .layui-tree .layui-this a{color: #3299CC;}
+.site-tree .layui-tree .layui-this .layui-icon{color: #3299CC;}
 
 .site-fix .site-tree{position: fixed; top: 0; bottom: 0; z-index: 666; min-height: 0; overflow: auto;  background-color: #fff;}
 .site-fix .site-content{margin-left: 220px;}
@@ -275,7 +275,7 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 	height: 100%;
 }
 .admin-nav-card>.layui-tab-title{
-	border-bottom: 1px solid #1AA094;
+	border-bottom: 1px solid #3299CC;
 }
 .admin-nav-card .layui-tab-title cite{
 	font-style: normal;
@@ -283,7 +283,7 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 }
 .admin-nav-card>.layui-tab-title .layui-this{
 	color: white;
-    background-color: #1AA094;
+    background-color: #3299CC;
 }
 .admin-nav-card>.layui-tab-title .layui-this:after{
 	border-bottom: 0;
@@ -311,10 +311,10 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 	width: 60px; height: 60px; border-radius: 100%;
 }
 .admin-header-lock-name{
-	color: #009688;margin: 8px 0 15px 0;
+	color: #3299CC;margin: 8px 0 15px 0;
 }
 .admin-header-lock-input{
-	width: 150px; color: #FFFFFF; height: 30px; border: 0;background-color: #009688; padding: 0 7px; border-radius: 2px;
+	width: 150px; color: #FFFFFF; height: 30px; border: 0;background-color: #3299CC; padding: 0 7px; border-radius: 2px;
 }
 /*table*/
 .site-table tbody tr td {text-align: center;}
@@ -334,7 +334,7 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
     text-align: center;
     width: 30px;
     height: 30px;
-    background-color: #1AA094;
+    background-color: #3299CC;
     line-height: 30px;
     top: 25%;
 }

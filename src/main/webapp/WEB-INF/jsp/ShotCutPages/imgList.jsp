@@ -67,7 +67,7 @@
 							autocomplete="off" class="layui-input">
 					</div>
 					<div class="layui-input-inline">
-						<button class="layui-btn" lay-submit="" lay-filter="demo1">搜索</button>
+						<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo1">搜索</button>
 					</div>
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 	</fieldset>
 			
     	<script type="text/html" id="toolBar">
-		  <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
+		  <a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-danger layui-btn layui-btn-normal-sm" lay-event="del">删除</a>
 		</script> 
 		<script type="text/javascript" src="/js/jquery-latest.js"></script>
 		<script type="text/javascript" src="/js/page.js"></script>

@@ -19,7 +19,7 @@
 
 <!-- 			<blockquote class="layui-elem-quote"> -->
 				
-<!-- 				<a href="javascript:;" class="layui-btn layui-btn-small" id="search"> -->
+<!-- 				<a href="javascript:;" class="layui-btn layui-btn-normal layui-btn layui-btn-normal-small" id="search"> -->
 <!-- 					<i class="layui-icon">&#xe615;</i> 搜索 -->
 <!-- 				</a> -->
 <!-- 			</blockquote> -->
@@ -81,9 +81,9 @@
 			
 		</div>
 	 
-<!--  原来有个发送警报，注释在这里方便你整理代码  <a class="layui-btn layui-btn-sm" onclick="toggleComdS(this)">发送警报</a>  -->
+<!--  原来有个发送警报，注释在这里方便你整理代码  <a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-sm" onclick="toggleComdS(this)">发送警报</a>  -->
 		<script type="text/html" id="barDemo">
-		  <a class="layui-btn layui-btn-danger layui-btn-sm">确认火情</a>
+		  <a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-danger layui-btn layui-btn-normal-sm">确认火情</a>
 		</script> 
     
 		<script type="text/javascript" src="/js/jquery-latest.js"></script>
@@ -94,7 +94,7 @@
 			
 			function toggleComdS(currRec){
 				
-				$(currRec).attr("class","layui-btn layui-btn-xs layui-btn-normal");
+				$(currRec).attr("class","layui-btn layui-btn-normal layui-btn layui-btn-normal-xs layui-btn layui-btn-normal-normal");
 				$(currRec).text("停止报警");
 				$(currRec).attr("onclick","toggleComdF(this)");
 			
@@ -117,7 +117,7 @@
 				
 				
 				
-				$(currRec).attr("class","layui-btn layui-btn-danger layui-btn-xs");
+				$(currRec).attr("class","layui-btn layui-btn-normal layui-btn layui-btn-normal-danger layui-btn layui-btn-normal-xs");
 				$(currRec).text("发送警报");
 				$(currRec).attr("onclick","toggleComdS(this)");
 				
@@ -179,7 +179,7 @@
 				      element.tabDelete('demo', '44'); //删除：“商品管理”
 				      
 				      
-				      othis.addClass('layui-btn-disabled');
+				      othis.addClass('layui-btn layui-btn-normal-disabled');
 				    }
 				    ,tabChange: function(){
 				      //切换到指定Tab项

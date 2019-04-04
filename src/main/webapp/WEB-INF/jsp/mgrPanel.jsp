@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>  
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">  
 
-<html>
+<html> 
 
 	<head>
 		<meta charset="utf-8">
@@ -32,7 +32,7 @@
 						</div>
 					</div>
 					<img alt="北京林业大学" src="/image/bjfu.jpg" style="position:fixed;left:5px;top:5px;">
-					<span style="font-size: 30px;position:fixed;left:300px;top:11px;color:#1AA094">森林防火指挥系統</span>
+					<span style="font-size: 30px;position:fixed;left:300px;top:11px;color:#3299CC">森林防火指挥系統</span>
 					<ul class="layui-nav admin-header-item">
 <!-- 						<li class="layui-nav-item"> -->
 <!-- 							<a href="javascript:;">清除缓存</a> -->
@@ -77,7 +77,7 @@
 			<div class="layui-side layui-bg-black" id="admin-side">
 				<div class="layui-side-scroll" id="admin-navbar-side" lay-filter="side"></div>
 			</div>
-			<div class="layui-body" style="bottom: 0;border-left: solid 2px #1AA094;" id="admin-body">
+			<div class="layui-body" style="bottom: 0;border-left: solid 2px #3299CC;" id="admin-body">
 				<div class="layui-tab admin-nav-card layui-tab-brief" lay-filter="admin-tab">
 					<ul class="layui-tab-title">
 						<li class="layui-this">
@@ -112,7 +112,7 @@
 					</div>
 					<div class="admin-header-lock-name" id="lockUserName">beginner</div>
 					<input type="text" class="admin-header-lock-input" value="输入密码解锁.." name="lockPwd" id="lockPwd" />
-					<button class="layui-btn layui-btn-small" id="unlock">解锁</button>
+					<button class="layui-btn layui-btn-normal layui-btn layui-btn-normal-small" id="unlock">解锁</button>
 				</div>
 			</script>
 			<!--锁屏模板 end -->

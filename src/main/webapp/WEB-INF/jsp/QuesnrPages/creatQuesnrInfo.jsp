@@ -85,9 +85,9 @@
 			
 			<div class="layui-form-item">
 				<div class="layui-input-block">
-					<input class="layui-btn" id="smtQsnBscInfo" type="submit" value="下一步" />
-<!-- 					<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button> -->
-					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					<input class="layui-btn layui-btn-normal" id="smtQsnBscInfo" type="submit" value="下一步" />
+<!-- 					<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo1">立即提交</button> -->
+					<button type="reset" class="layui-btn layui-btn-normal layui-btn layui-btn-normal-primary">重置</button>
 				</div>
 			</div>		
 			

@@ -59,7 +59,7 @@
 							autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
 					</div>
 					<div class="layui-input-inline">
-						<button class="layui-btn" lay-submit="" lay-filter="demo1">搜索</button>
+						<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo1">搜索</button>
 					</div>
 				</div>
 			</div>
@@ -280,10 +280,10 @@
 			
 	//-----------------------删除模块---------------------------------------------
 		function toggleComdS(){
-			$("#delComd").attr("class","layui-btn layui-btn-warm");
+			$("#delComd").attr("class","layui-btn layui-btn-normal layui-btn layui-btn-normal-warm");
 			$("#delComd").text("完成");
 			$("#delComd").attr("onclick","toggleComdF()");
-			$("#delComd").after("<button class='layui-btn layui-btn-danger' id='delNow' onclick='smtDelNodes()'>删除</button>");
+			$("#delComd").after("<button class='layui-btn layui-btn-normal layui-btn layui-btn-normal-danger' id='delNow' onclick='smtDelNodes()'>删除</button>");
 			$(".selBox").show();
 			
 			layui.use(['form'], function(){
@@ -298,7 +298,7 @@
 		}
 		
 		function toggleComdF(){
-			$("#delComd").attr("class","layui-btn");
+			$("#delComd").attr("class","layui-btn layui-btn-normal");
 			$("#delComd").text("编辑");
 			$("#delComd").attr("onclick","toggleComdS()");
 			$("#delNow").remove();

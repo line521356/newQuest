@@ -222,7 +222,7 @@
 				      element.tabDelete('demo', '44'); //删除：“商品管理”
 				      
 				      
-				      othis.addClass('layui-btn-disabled');
+				      othis.addClass('layui-btn layui-btn-normal-disabled');
 				    }
 				    ,tabChange: function(){
 				      //切换到指定Tab项

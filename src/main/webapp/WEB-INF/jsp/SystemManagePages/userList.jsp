@@ -34,7 +34,7 @@
 							autocomplete="off" class="layui-input" lay-verify="required">
 					</div>
 					<div class="layui-input-inline">
-						<button class="layui-btn" lay-submit="" lay-filter="demo1">搜索</button>
+						<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo1">搜索</button>
 					</div>				
 				</div>
 			</div>			
@@ -52,8 +52,8 @@
 			
 
 		<script type="text/html" id="barDemo">
-		  <a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="revise">用户信息维护</a>		  
-		  <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="del">注销用户</a>
+		  <a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-normal layui-btn layui-btn-normal-sm" lay-event="revise">用户信息维护</a>
+		  <a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-primary layui-btn layui-btn-normal-sm" lay-event="del">注销用户</a>
 		</script> 
     
 		<script type="text/javascript" src="/js/jquery-latest.js"></script>

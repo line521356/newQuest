@@ -37,13 +37,13 @@
 			</table>
 	 
 <!--  		<script type="text/html" id="barDemo">  -->
-<!-- 		  <a class="layui-btn layui-btn-danger layui-btn-sm" style="font-size: 15px;" onclick="firePointPosition(689, 584)">定位火点</a> -->
-<!-- 		  <a class="layui-btn layui-btn-sm" style="font-size: 15px;" onclick="searchPlan(1,-1)">规划扑救方案</a>		 -->
+<!-- 		  <a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-danger layui-btn layui-btn-normal-sm" style="font-size: 15px;" onclick="firePointPosition(689, 584)">定位火点</a> -->
+<!-- 		  <a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-sm" style="font-size: 15px;" onclick="searchPlan(1,-1)">规划扑救方案</a>		 -->
 <!-- 		</script>  -->
 	 		<script type="text/html" id="barDemo"> 
-		  		<a class="layui-btn layui-btn-danger layui-btn-sm" style="font-size: 15px;" lay-event="posFP">定位火点</a> 
-		  		<a class="layui-btn layui-btn-sm" style="font-size: 15px;" lay-event="showPlan">规划扑救方案</a>
-				<a class="layui-btn layui-btn-normal layui-btn-sm" style="font-size: 15px;" lay-event="cancel">解除警报</a>		
+		  		<a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-danger layui-btn layui-btn-normal-sm" style="font-size: 15px;" lay-event="posFP">定位火点</a>
+		  		<a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-sm" style="font-size: 15px;" lay-event="showPlan">规划扑救方案</a>
+				<a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-normal layui-btn layui-btn-normal-sm" style="font-size: 15px;" lay-event="cancel">解除警报</a>
  			</script>  
     
 		<script type="text/javascript" src="/js/jquery-latest.js"></script>
@@ -70,7 +70,7 @@
 		
 			function toggleComdS(currRec){
 				
-				$(currRec).attr("class","layui-btn layui-btn-xs layui-btn-normal");
+				$(currRec).attr("class","layui-btn layui-btn-normal layui-btn-xs layui-btn-normal");
 				$(currRec).text("停止报警");
 				$(currRec).attr("onclick","toggleComdF(this)");
 			

@@ -43,7 +43,7 @@
 				        <input type="text" name="recTime_ed" id="recTime_ed" autocomplete="off" class="layui-input">
 				    </div>					
 					<div class="layui-input-inline">
-						<button class="layui-btn" lay-submit="" lay-filter="demo1">搜索</button>
+						<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo1">搜索</button>
 					</div>				
 				</div>
 			</div>			

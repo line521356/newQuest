@@ -82,7 +82,7 @@ layui.define(['element', 'common'], function(exports) {
 			var title = '';
 			if(data.icon !== undefined) {
 				if(data.icon.indexOf('fa-') !== -1) {
-					title += '<i class="fa ' + data.icon + '" aria-hidden="true"></i>';
+					title += '<i class="fa' + data.icon + '" aria-hidden="true"></i>';
 				} else {
 					title += '<i class="layui-icon">' + data.icon + '</i>';
 				}

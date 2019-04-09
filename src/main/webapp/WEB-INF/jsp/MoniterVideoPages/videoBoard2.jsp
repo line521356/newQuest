@@ -10,7 +10,7 @@
             单页调试访问地址：/mVid/toVideoBoard2 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="/plugins/layUI2/layui/css/layui.css"  media="all">
+	<link rel="stylesheet" href="../plugins/layUI2/layui/css/layui.css"  media="all">
 	<title>视频管理</title>
 </head>
 
@@ -21,67 +21,54 @@
 </fieldset>
 
 
-<%--<form class="layui-form layui-form-pane">--%>
-<%--<div class="layui-form-item">--%>
-<%--<div class="layui-inline">--%>
-<%--<label style="margin-left:2cm" class="layui-form-label">起始日期：</label>--%>
-<%--<div class="layui-input-inline">--%>
-<%--<input type="text" name="startDate" id="date1" placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="layui-inline">--%>
-<%--<label class="layui-form-label">终止日期：</label>--%>
-<%--<div class="layui-input-inline">--%>
-<%--<input type="text" name="endDate" id="date2" placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="layui-inline">--%>
-<%--<label class="layui-form-label">视频类型</label>--%>
-<%--<div class="layui-input-inline">--%>
-<%--<select name="vidType" lay-search="">--%>
-<%--<option value="">请选择您要搜索的视频类型</option>--%>
-<%--<option value="1">监控视频</option>--%>
-<%--<option value="2">手动录制视频</option>--%>
-<%--<option value="3">报警视频</option>--%>
-<%--<option value="4">所有视频</option>--%>
-<%--</select>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%----%>
-<%--<div style="margin-left:2cm" class="layui-form-item">--%>
-<%--<div class="layui-inline">--%>
-<%--<label class="layui-form-label">关键词类型</label>--%>
-<%--<div class="layui-input-inline">--%>
-<%--<select name="mptInfoType" lay-search="">--%>
-<%--<option value="">请选择关键词类型</option>--%>
-<%--<option value="1">监控点ID</option>--%>
-<%--<option value="2">监控点IP</option>--%>
-<%--<!-- 					<option value="3">监控点名称</option> -->--%>
-<%--<!-- 					<option value="4">视频名称</option> -->--%>
-<%--</select>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="layui-inline">--%>
-<%--<label class="layui-form-label">搜索关键词</label>--%>
-<%--<div class="layui-input-inline">--%>
-<%--<input type="text" name="mptInfo" autocomplete="off" placeholder="请输入搜索关键词" class="layui-input">--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div> --%>
-<%----%>
-<%--<button style="margin-left:2cm" class="layui-btn" lay-submit="" lay-filter="demo1">搜索</button>--%>
-<%--<button type="reset" class="layui-btn layui-btn-primary">重置</button>--%>
-<%----%>
-<%--</form>--%>
-<div id="search">
-	<div id="monitorPoint">
-		<span class="layui-anim-up">监控站点:</span>
+<form class="layui-form layui-form-pane">
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label style="margin-left:2cm" class="layui-form-label">起始日期：</label>
+			<div class="layui-input-inline">
+				<input type="text" name="startDate" id="date1" placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-label">终止日期：</label>
+			<div class="layui-input-inline">
+				<input type="text" name="endDate" id="date2" placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
+			</div>
+		</div>
 	</div>
-	<div id="videoType">
-		<span class="layui-anim-up"> 视频类型:</span>
+
+	<div style="margin-left:2cm" class="layui-form-item">
+		<label class="layui-form-label">视频类型</label>
+		<div class="layui-input-block">
+			<input type="checkbox" lay-filter="vidType" name="vidType" value="4" title="全部" checked="">
+			<input type="checkbox" lay-filter="vidType" name="vidType" value="1" title="监控视频">
+			<input type="checkbox" lay-filter="vidType" name="vidType" value="2" title="手动录制视频">
+			<input type="checkbox" lay-filter="vidType" name="vidType" value="3" title="报警视频">
+		</div>
 	</div>
-</div>
+
+	<div style="margin-left:2cm" class="layui-form-item">
+		<label class="layui-form-label">关键词类型</label>
+		<div class="layui-input-block">
+			<input type="checkbox" lay-filter="mptInfoType" name="mptInfoType" value="全部" title="全部" checked="">
+			<input type="checkbox" lay-filter="mptInfoType" name="mptInfoType" value="1" title="监控点ID">
+			<input type="checkbox" lay-filter="mptInfoType" name="mptInfoType" value="2" title="监控点IP">
+		</div>
+	</div>
+
+	<div style="margin-left:2cm" class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">搜索关键词</label>
+			<div class="layui-input-inline">
+				<input type="text" name="mptInfo" autocomplete="off" placeholder="请输入搜索关键词" class="layui-input">
+			</div>
+		</div>
+	</div>
+
+	<button style="margin-left:2cm" class="layui-btn" lay-submit="" lay-filter="demo1">搜索</button>
+	<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
+</form>
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
 	<legend>批量删除</legend>
@@ -105,17 +92,16 @@
 
 
 
-<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="/js/ZTree/jquery.ztree.all.js"></script>
-<script type="text/javascript" src="/js/json2.js"></script>
-<script type="text/javascript" src="/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../js/ZTree/jquery.ztree.all.js"></script>
+<script type="text/javascript" src="../js/json2.js"></script>
+<script type="text/javascript" src="../plugins/layui/layui.js"></script>
 <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
 
 
     $(document).ready( function(){
-        initSelectParam();
         onloadVideos();                //加载所有节点	0727暂时注释，先测试页面效果
         $(".selBox").hide();
 
@@ -223,6 +209,20 @@
 
         //创建一个编辑器
         var editIndex = layedit.build('LAY_demo_editor');
+
+        form.on('checkbox(vidType)', function(obj){
+            var val = obj.value;
+            $(":checkbox[name='vidType'][value!='" + val + "']").removeAttr('checked');
+            $(obj).prop("checked", "checked");
+            form.render('checkbox');
+        });
+
+        form.on('checkbox(mptInfoType)', function(obj){
+            var val = obj.value;
+            $(":checkbox[name='mptInfoType'][value!='" + val + "']").removeAttr('checked');
+            $(obj).prop("checked", "checked");
+            form.render('checkbox');
+        });
 
         //自定义验证规则
         form.verify({
@@ -343,49 +343,6 @@
         });
 
     }
-
-    $(".layui-btn-primary").click(function(){
-        event.stopPropagation();
-        alert("aaaaaaaaa");
-        $(this).removeClass("layui-btn-primary");
-    });
-
-    function initSelectParam(){
-        $.ajax( {
-            async : true, //是否异步
-            cache : false, //是否使用缓存
-            type : "get", //请求方式,post
-            traditional:true,
-            dataType:"json",
-            contentType:"application/json",
-            url : "<%=request.getContextPath() %>/mVid/initSelectParam", //请求链接
-            error : function() {
-                alert('No it dosent work.');
-            },
-            success : function(data) {
-                $(data.monitorPointList).each(function () {
-                    var span = document.createElement("span");
-                    span.innerHTML = this.mptName;
-                    span.setAttribute("id",this.mptId);
-                    span.setAttribute("name","monitorPoint");
-                    span.classList.add("layui-btn");
-                    span.classList.add("layui-btn-primary");
-                    $("#monitorPoint").append(span);
-                });
-                $(data.videoType).each(function () {
-                    var span = document.createElement("span");
-                    span.innerHTML = this.name;
-                    span.setAttribute("id",this.code);
-                    span.setAttribute("name","videoType");
-                    span.classList.add("layui-btn");
-                    span.classList.add("layui-btn-primary");
-                    $("#videoType").append(span);
-                });
-            }
-        });
-    }
-
-
 
 
 </script>

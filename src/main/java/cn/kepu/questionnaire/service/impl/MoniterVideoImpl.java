@@ -14,12 +14,14 @@ import cn.kepu.questionnaire.service.IMoniterVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service("moniterVideoService")
 public class MoniterVideoImpl implements IMoniterVideoService {
 	
-	@Autowired
+	@Resource
 	private IMoniterVideoDao moniterVideoDao;
-	@Autowired
+	@Resource
 	private IAlarmRecordDao alarmRecordDao;
 	
 	
@@ -270,27 +272,27 @@ public class MoniterVideoImpl implements IMoniterVideoService {
 		
 
 		List<Object> gVidsListJson = new ArrayList<Object>();
-						
+
 		//---------------------------- 大换血  任何一个条件都可能为空 -------------------------
-		
-		
+
+
 		//先处理单表的部分,即监控点关键词为空，这里不考虑mptInfoType，因为无论输入什么关键词类型，关键词为空那就是无效的
-		if (srchBody.getMptInfo() == "") {	
-			
-			List<MoniterVideo> moniterVideos = moniterVideoDao.GselmVids(srchBody);			
-			List<RecordVideo> recordVideos = moniterVideoDao.GselrVids(srchBody);			
-			List<AlarmVideo> alarmVideos = moniterVideoDao.GselaVids(srchBody);			
+		if (srchBody.getMptInfo() == "") {
+
+			List<MoniterVideo> moniterVideos = moniterVideoDao.GselmVids(srchBody);
+			List<RecordVideo> recordVideos = moniterVideoDao.GselrVids(srchBody);
+			List<AlarmVideo> alarmVideos = moniterVideoDao.GselaVids(srchBody);
 			gVidsListJson = transToSum(moniterVideos, recordVideos, alarmVideos);
-			
+
 		} else { //监控点信息不为空的情况下
-			
+
 			List<MoniterVideo> moniterVideos = new ArrayList<MoniterVideo>();
 			List<RecordVideo> recordVideos = new ArrayList<RecordVideo>();
 			List<AlarmVideo> alarmVideos = new ArrayList<AlarmVideo>();
-			
+
 			switch (srchBody.getMptInfoType()) {
 			case 1:
-				srchBody.setMptInfoDesc("mptId");				
+				srchBody.setMptInfoDesc("mptId");
 				moniterVideos = moniterVideoDao.selSinmVidAllInfoByMptID(Integer.parseInt(srchBody.getMptInfo()));
 				recordVideos = moniterVideoDao.selSinrVidAllInfoByMptID(Integer.parseInt(srchBody.getMptInfo()));
 				alarmVideos = moniterVideoDao.selSinaVidAllInfoByMptID(Integer.parseInt(srchBody.getMptInfo()));
@@ -298,20 +300,20 @@ public class MoniterVideoImpl implements IMoniterVideoService {
 					moniterVideos = pickmVidByDate(moniterVideos, srchBody);
 					recordVideos = pickrVidByDate(recordVideos, srchBody);
 					alarmVideos = pickaVidByDate(alarmVideos, srchBody);
-				} 
+				}
 				gVidsListJson = transToSum(moniterVideos, recordVideos, alarmVideos);
 				break;
 			case 2:
 				srchBody.setMptInfoDesc("mptIP");
-				MonitorPoint monitorPointIP = moniterVideoDao.GselVidsByMptIP(srchBody);				
+				MonitorPoint monitorPointIP = moniterVideoDao.GselVidsByMptIP(srchBody);
 				moniterVideos = monitorPointIP.getMoniterVideos();
 				recordVideos = monitorPointIP.getRecordVideos();
 				alarmVideos = monitorPointIP.getAlarmVideos();
-				if (srchBody.getEndDate() != null || srchBody.getStartDate() != null) {   
+				if (srchBody.getEndDate() != null || srchBody.getStartDate() != null) {
 					moniterVideos = pickmVidByDate(moniterVideos, srchBody);
 					recordVideos = pickrVidByDate(recordVideos, srchBody);
 					alarmVideos = pickaVidByDate(alarmVideos, srchBody);
-				} 				
+				}
 				gVidsListJson = transToSum(moniterVideos, recordVideos, alarmVideos);
 				break;
 			case 3:
@@ -338,13 +340,13 @@ public class MoniterVideoImpl implements IMoniterVideoService {
 					moniterVideos = pickmVidByDate(moniterVideos, srchBody);
 					recordVideos = pickrVidByDate(recordVideos, srchBody);
 					alarmVideos = pickaVidByDate(alarmVideos, srchBody);
-				} 
+				}
 				gVidsListJson = transToSum(moniterVideos, recordVideos, alarmVideos);
 				break;
 			}
-			
+
 		}
-	
+
 		//---------------------------- 大换血  任何一个条件都可能为空 -------------------------
 
 		return gVidsListJson;

@@ -42,7 +42,7 @@ public class UserController {
 	private IUserService userService;
 	
 	
-	private Log logger = LogFactory.getLog(this.getClass());  
+	private Log logger = LogFactory.getLog(this.getClass());
 		
     //--------------------------Pure dispatcher ----------------------------   
     

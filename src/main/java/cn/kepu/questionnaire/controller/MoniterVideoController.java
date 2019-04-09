@@ -136,36 +136,4 @@ public class MoniterVideoController {
 		response.getWriter().write("{\"result\":\"true\"}");    
 		//强行success
 	}
-
-	@ResponseBody
-	@GetMapping("/initSelectParam")
-	public JSONObject initSelectParam(){
-		List <MonitorPoint> monitorPointList = iLiveService.getAllPoint();
-		List <Map <String,String>> videoType = new ArrayList<>() ;
-		Map<String,String> map1 = new HashMap<>();
-		Map<String,String> map2 = new HashMap<>();
-		Map<String,String> map3 = new HashMap<>();
-		Map<String,String> map4 = new HashMap<>();
-		map1.put("code","1");
-		map1.put("name","监控视频");
-
-		map2.put("code","2");
-		map2.put("name","手动录制视频");
-
-		map3.put("code","3");
-		map3.put("name","报警视频");
-
-		map4.put("code","4");
-		map4.put("name","所有视频");
-
-		videoType.add(map1);
-		videoType.add(map2);
-		videoType.add(map3);
-		videoType.add(map4);
-		JSONObject result = new JSONObject();
-		result.put("monitorPointList",monitorPointList);
-		result.put("videoType",videoType);
-		return result;
-
-	}
 }

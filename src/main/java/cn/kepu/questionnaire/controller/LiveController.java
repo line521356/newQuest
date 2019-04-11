@@ -47,4 +47,9 @@ public class LiveController {
         return "livePages/live";
     }
 
+    @GetMapping("/test")
+    public String test(){
+        return "test/test";
+    }
+
 }

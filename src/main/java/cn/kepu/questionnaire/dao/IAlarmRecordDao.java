@@ -30,5 +30,6 @@ public interface IAlarmRecordDao {
 	void udtAlmStatusToCancel(AlarmRecord alarmRecord);
 
 	List<AlarmRecord> selAllIsAlarming();
-	
+
+    void updateToExceptionAlarm(String aRecId);
 }

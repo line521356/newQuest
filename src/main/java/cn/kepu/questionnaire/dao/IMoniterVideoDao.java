@@ -62,5 +62,6 @@ public interface IMoniterVideoDao {
 	void insertVid(MoniterVideo moniterVideo);
 
 	List <MonitorPoint> getAllMonitorPoint();
-	
+
+    MonitorPoint findMonitorPointById(String id);
 }

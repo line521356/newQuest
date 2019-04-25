@@ -6,10 +6,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.kepu.questionnaire.pojo.AlarmRecord;
+import cn.kepu.questionnaire.pojo.GnrUser;
+import cn.kepu.questionnaire.pojo.MoniterVideo;
+import cn.kepu.questionnaire.pojo.MonitorPoint;
 import cn.kepu.questionnaire.service.IAlarmRecordService;
+import cn.kepu.questionnaire.service.IMoniterVideoService;
+import cn.kepu.questionnaire.service.IUserService;
+import cn.zhouyafeng.itchat4j.api.MessageTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +35,15 @@ public class AlarmRecController {
 	@Autowired
 	@Qualifier("alarmRecService")
 	private IAlarmRecordService alarmRecordService;
+
+	@Value("${live.rtmp-url}")
+	String baseLiveIp;
+
+	@Autowired
+	private IMoniterVideoService moniterVideoService;
+
+	@Autowired
+	private IUserService userService;
 	
 	
 	//-------------------------pure dispatcher---------------------- 
@@ -187,6 +204,59 @@ public class AlarmRecController {
 		result.put("recs", unhandledRecs);
 		result.put("msg", 1);
 		return result;
+	}
+
+	@RequestMapping("/video")
+	public String video(String id, Model model){
+		MonitorPoint monitorPoint = moniterVideoService.findMonitorPointById(id);
+		String url = baseLiveIp + monitorPoint.getMptIP();
+		List <GnrUser> gnrUserList = userService.checkAllUsers();
+		model.addAttribute("url",url);
+		model.addAttribute("gnrUserList",gnrUserList);
+		model.addAttribute("monitorPoint",monitorPoint);
+		return "AlrmPages/video";
+	}
+
+	/**
+	 * 发送告警到微信
+	 * @param jsonObject
+	 * @return
+	 */
+	@RequestMapping("/sendAlarmMsg")
+	@ResponseBody
+	public String sendAlarmMsg(@RequestBody JSONObject jsonObject){
+		String userId = jsonObject.getString("user");
+		String condition = jsonObject.getString("condition");
+		String intensity = jsonObject.getString("intensity");
+		String direction = jsonObject.getString("direction");
+		String speed = jsonObject.getString("speed");
+		GnrUser user = userService.chkUserInfo(Integer.parseInt(userId));
+		StringBuffer msg = new StringBuffer();
+		msg.append("火情:"+condition+"\n");
+		msg.append("火势:"+intensity+"\n");
+		msg.append("移动方向:"+direction+"\n");
+		msg.append("移动速度:"+speed+"\n");
+		MessageTools.sendMsgByNickName(msg.toString(),user.getWechatName());
+		JSONObject result = new JSONObject();
+		result.put("code", 0);
+		result.put("msg", "success");
+		return result.toString();
+	}
+
+
+	/**
+	 * 告警归为异常告警
+	 * @param aRecId
+	 * @return
+	 */
+	@RequestMapping("/updateToExceptionAlarm")
+	@ResponseBody
+	public String updateToExceptionAlarm(String aRecId){
+		alarmRecordService.alarmRecordService(aRecId);
+		JSONObject result = new JSONObject();
+		result.put("code", 0);
+		result.put("msg", "success");
+		return result.toString();
 	}
 	
 	

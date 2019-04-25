@@ -93,6 +93,10 @@
 				select * from monitorpoint
  	 	</select>
 
+		<select id="findMonitorPointById" parameterType="java.lang.String" resultType="cn.kepu.questionnaire.pojo.MonitorPoint">
+				select * from monitorpoint where mptId=#{id}
+ 	 	</select>
+
 	<select id="selAllmVids" resultType="cn.kepu.questionnaire.pojo.MoniterVideo">
 				select * from monitervideo
  	 	</select>

@@ -30,9 +30,6 @@ public class MoniterVideoController {
 	@Autowired
 	@Qualifier("moniterVideoService")
 	private IMoniterVideoService moniterVideoService;
-
-	@Autowired
-	private ILiveService iLiveService;
 	
 	private Log logger = LogFactory.getLog(this.getClass());
 	

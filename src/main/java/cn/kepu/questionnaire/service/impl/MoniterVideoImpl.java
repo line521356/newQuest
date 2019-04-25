@@ -78,6 +78,11 @@ public class MoniterVideoImpl implements IMoniterVideoService {
 		moniterVideoDao.insertVid(moniterVideo);
 	}
 
+	@Override
+	public MonitorPoint findMonitorPointById(String id) {
+		return moniterVideoDao.findMonitorPointById(id);
+	}
+
 	public List<Object> mVidsListJson(){
 		String str = null;
 		List<Object> mVidsListJson = new ArrayList<Object>();

@@ -244,6 +244,11 @@ public class AlarmRecordServiceImpl implements IAlarmRecordService {
 		return alarmRecordDao.selAllIsAlarming();
 	}
 
+	@Override
+	public void alarmRecordService(String aRecId) {
+		alarmRecordDao.updateToExceptionAlarm(aRecId);
+	}
+
 	/**
 	 * 古德曼函数，返回纬度
 	 * @param distance

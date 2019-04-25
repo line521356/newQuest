@@ -1,6 +1,7 @@
 package cn.kepu.questionnaire.service;
 
 import cn.kepu.questionnaire.pojo.MoniterVideo;
+import cn.kepu.questionnaire.pojo.MonitorPoint;
 import cn.kepu.questionnaire.pojo.SrchBody;
 import cn.kepu.questionnaire.pojo.VideoDetInfo;
 
@@ -23,5 +24,6 @@ public interface IMoniterVideoService {
 	VideoDetInfo getVidDetInfo(Integer vidID, String videoType);
 
 	void insertVid(MoniterVideo moniterVideo);
-	
+
+	MonitorPoint findMonitorPointById(String id);
 }

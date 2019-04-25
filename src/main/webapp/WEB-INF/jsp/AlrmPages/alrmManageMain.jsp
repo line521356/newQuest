@@ -80,7 +80,9 @@
 			</fieldset>
 			
 		</div>
-	 
+	 <script type="text/html" id="toolBar">
+		 <a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">火情判断</a>
+	 </script>
 <!--  原来有个发送警报，注释在这里方便你整理代码  <a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-sm" onclick="toggleComdS(this)">发送警报</a>  -->
 		<script type="text/html" id="barDemo">
 		  <a class="layui-btn layui-btn-normal layui-btn layui-btn-normal-danger layui-btn layui-btn-normal-sm">确认火情</a>
@@ -148,16 +150,33 @@
 					,page: {layout: ['prev', 'page', 'next', 'count', 'skip']} //开启分页
 				    ,limit: 10
 				    ,cols: [[ //表头
-			       	      {field: 'mptName', title: '监控点名称', sort: true}
-			       	      ,{field: 'alarmTime', title: '报警时间', sort: true}
-			       	      ,{field: 'optLongtitude', title: '火点纵坐标'}
-			       	      ,{field: 'optLattitude', title: '火点横坐标'} 
-			       	      ,{field: 'name', title: '巡查人员'}
-			       	      ,{field: 'phone', title: '联系方式'}
+                          {field: 'aRecId', title: '告警id'}
+                          ,{field: 'mptId', title: '监控点id'}
+                          ,{field: 'mptName', title: '监控点名称', sort: true}
+                          ,{field: 'alarmTime', title: '报警时间', sort: true}
+                          ,{field: 'optLongtitude', title: '火点纵坐标'}
+                          ,{field: 'optLattitude', title: '火点横坐标'}
+                          ,{field: 'name', title: '巡查人员'}
+                          ,{field: 'mptId', title: '火情判定', toolbar: '#toolBar'}
+                          ,{field: 'phone', title: '联系方式'}
 				    ]]
 				  });
+
+                //监听工具条
+                table.on('tool(demo)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    var data = obj.data; 				//获得当前行数据
+                    var layEvent = obj.event; 		//获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                    var tr = obj.tr;
+                    //获得当前行 tr 的DOM对象
+                    var td = tr.find("td");
+                    if(layEvent === 'detail'){ 	//查看
+                        window.open("/alrmRec/video?id="+td.eq(1).text()+"&aRecId="+td.eq(0).text());
+                    }
+                });
 				  
 			});
+
+
 			
 			//LayUI 选项卡 必需监听
 			layui.use('element', function(){
@@ -214,11 +233,13 @@
 							,page: {layout: ['prev', 'page', 'next', 'count', 'skip']} //开启分页
 						    ,limit: 10
 						    ,cols: [[ //表头
-					       	      {field: 'mptName', title: '监控点名称', sort: true}
+					       	      {field: 'mptId', title: '监控点id'}
+					       	      ,{field: 'mptName', title: '监控点名称', sort: true}
 					       	      ,{field: 'alarmTime', title: '报警时间', sort: true}
 					       	      ,{field: 'optLongtitude', title: '火点纵坐标'}
 					       	      ,{field: 'optLattitude', title: '火点横坐标'} 
 					       	      ,{field: 'name', title: '巡查人员'}
+					       	      ,{field: 'mptId', title: '火情判定', toolbar: '#toolBar'}
 					       	      ,{field: 'phone', title: '联系方式'}
 						    ]]
 						  });  

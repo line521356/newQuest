@@ -28,5 +28,6 @@ public interface IAlarmRecordService {
 	List<AlarmRecord> chkRecsInGps();			//GPS坐标的报警记录查询接口
 
 	List<AlarmRecord> selAllIsAlarming();
-	
+
+	void alarmRecordService(String aRecId);
 }

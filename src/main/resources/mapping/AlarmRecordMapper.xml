@@ -47,6 +47,7 @@
  	 	<select id="selUnhandledRecs" resultType="cn.kepu.questionnaire.pojo.AlarmRecord">
  	 			select 
  	 			mpt.mptName,
+ 	 			mpt.mptId,
  	 			arec.aRecId,
  	 			arec.alarmTime, 
  	 			arec.optLattitude,
@@ -56,7 +57,7 @@
  	 			arec.name,
  	 			arec.phone
  	 			from alarmrecord arec, monitorpoint mpt 
- 	 			where arec.mptId = mpt.mptId and arec.isConfirm = 1	 			
+ 	 			where arec.mptId = mpt.mptId and arec.isConfirm = 1
  	 	</select>
  	 	
  	 	<select id="selHandledRecs" resultType="cn.kepu.questionnaire.pojo.AlarmRecord">
@@ -109,6 +110,11 @@
 		
 		<update id="udtAlmStatusToCancel" parameterType="java.lang.Integer">  
 	        update alarmrecord set isConfirm = 2 
+	        where aRecId = #{aRecId}
+		</update>
+
+	<update id="updateToExceptionAlarm" parameterType="java.lang.Integer">
+	        update alarmrecord set isConfirm = -1
 	        where aRecId = #{aRecId}
 		</update>
 		

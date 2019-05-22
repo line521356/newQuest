@@ -360,7 +360,7 @@ canvas.onmousewheel=canvas.onwheel=function(event){
     } else {                   //向下滑轮
         console.log("当前操作：缩小 ， 当前放缩等级 ： " + curZoomLevel);
         if (curZoomLevel < 2) {
-          alert("已缩小到最小级别！");
+          // alert("已缩小到最小级别！");
         } else {
           curTile = selTileZo(event.clientX,event.clientY,curZoomLevel);
           if (curZoomLevel == 2) {

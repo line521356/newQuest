@@ -11,6 +11,7 @@ import cn.kepu.questionnaire.dao.IAlarmRecordDao;
 import cn.kepu.questionnaire.dao.IMoniterVideoDao;
 import cn.kepu.questionnaire.pojo.*;
 import cn.kepu.questionnaire.service.IMoniterVideoService;
+import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -113,7 +114,7 @@ public class MoniterVideoImpl implements IMoniterVideoService {
 		switch (srchBody.getVidType()) {
 		case 1:
 			srchBody.setSrchRange("monitervideo");
-			if (srchBody.getMptInfo() == ""){	//没有监控点信息
+			if (srchBody.getMptInfoType().equals("4")||srchBody.getMptInfoType() == null|| StringUtils.isEmpty(srchBody.getMptInfo())){	//没有监控点信息
 				moniterVideos = moniterVideoDao.GselmVids(srchBody);
 			} else {
 				switch (srchBody.getMptInfoType()){

@@ -50,7 +50,7 @@
 	<div style="margin-left:2cm" class="layui-form-item">
 		<label class="layui-form-label">关键词类型</label>
 		<div class="layui-input-block">
-			<input type="checkbox" lay-filter="mptInfoType" name="mptInfoType" value="全部" title="全部" checked="">
+			<input type="checkbox" lay-filter="mptInfoType" name="mptInfoType" value="0" title="全部" checked="">
 			<input type="checkbox" lay-filter="mptInfoType" name="mptInfoType" value="1" title="监控点ID">
 			<input type="checkbox" lay-filter="mptInfoType" name="mptInfoType" value="2" title="监控点IP">
 		</div>
@@ -258,17 +258,17 @@
 // 				  layer.alert(JSON.stringify(data.field), {
 // 			    		title: '最终的提交信息'
 // 			    	})
-            if(nullCount > 4){
-                layer.confirm('搜索条件为空，请检查', {
-                    btn: ['好的'] //按钮
-                });
-            } else if((data.field.mptInfoType != "") && (data.field.mptInfo == "")){
-                layer.confirm('请按您输入的关键词类型输入关键词！', {
-                    btn: ['好的'] //按钮
-                });
-            } else {
+//             if(nullCount > 4){
+//                 layer.confirm('搜索条件为空，请检查', {
+//                     btn: ['好的'] //按钮
+//                 });
+//             } else if((data.field.mptInfoType != "") && (data.field.mptInfo == "")){
+//                 layer.confirm('请按您输入的关键词类型输入关键词！', {
+//                     btn: ['好的'] //按钮
+//                 });
+//             } else {
                 askSrchResult(data.field)
-            }
+            // }
 
             return false; //false表示使用AJAX提交，否则会跳转
         });

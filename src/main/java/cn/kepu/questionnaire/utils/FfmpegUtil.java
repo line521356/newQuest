@@ -342,9 +342,9 @@ public class FfmpegUtil {
 
     }
     public static void main(String[] args) {
-        String inputFile = "rtsp://admin:GYDHJM@192.168.124.9:554/h264/ch1/main/av_stream";
+        String inputFile = "rtsp://admin:GYDHJM@192.168.124.12:554/h264/ch1/main/av_stream";
 
-        String outputFile="rtmp://localhost/live/192.168.124.9";
+        String outputFile = "rtmp://localhost/live/192.168.124.12";
 
         try {
             recordPush(inputFile, outputFile,25);

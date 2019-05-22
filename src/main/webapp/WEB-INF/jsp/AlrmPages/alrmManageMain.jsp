@@ -170,7 +170,7 @@
                     //获得当前行 tr 的DOM对象
                     var td = tr.find("td");
                     if(layEvent === 'detail'){ 	//查看
-                        window.open("/alrmRec/video?id="+td.eq(1).text()+"&aRecId="+td.eq(0).text());
+                        window.open("/alrmRec/video?id="+td.eq(1).text()+"&aRecId="+td.eq(0).text(),"newwindow","height=1080, width=1920, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
                     }
                 });
 				  

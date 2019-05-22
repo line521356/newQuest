@@ -88,7 +88,7 @@
             //获得当前行 tr 的DOM对象
             var td = tr.find("td");
             if(layEvent === 'detail'){ 	//查看
-                window.open("/live/video?ip="+td.eq(1).text());
+                window.open("/live/video?ip="+td.eq(1).text(),"newwindow","height=768, width=1366, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
             }
         });
 

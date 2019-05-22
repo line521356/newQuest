@@ -120,6 +120,7 @@
                     type : 'post', //请求方式,post
                     dataType : "json", //数据传输格式
                     data:JSON.stringify(json),
+                    contentType: 'application/json',
                     url : "<%=request.getContextPath() %>/alrmRec/sendAlarmMsg", //请求链接
                     error : function() {
                         alert('亲，网络有点不给力呀！');

@@ -210,9 +210,7 @@ public class AlarmRecController {
 	public String video(String id, Model model){
 		MonitorPoint monitorPoint = moniterVideoService.findMonitorPointById(id);
 		String url = baseLiveIp + monitorPoint.getMptIP();
-		List <GnrUser> gnrUserList = userService.checkAllUsers();
 		model.addAttribute("url",url);
-		model.addAttribute("gnrUserList",gnrUserList);
 		model.addAttribute("monitorPoint",monitorPoint);
 		return "AlrmPages/video";
 	}
@@ -225,18 +223,21 @@ public class AlarmRecController {
 	@RequestMapping("/sendAlarmMsg")
 	@ResponseBody
 	public String sendAlarmMsg(@RequestBody JSONObject jsonObject){
-		String userId = jsonObject.getString("user");
+		List <GnrUser> gnrUserList = userService.checkAllUsers();
+		String user = jsonObject.getString("user");
 		String condition = jsonObject.getString("condition");
 		String intensity = jsonObject.getString("intensity");
 		String direction = jsonObject.getString("direction");
 		String speed = jsonObject.getString("speed");
-		GnrUser user = userService.chkUserInfo(Integer.parseInt(userId));
 		StringBuffer msg = new StringBuffer();
 		msg.append("火情:"+condition+"\n");
 		msg.append("火势:"+intensity+"\n");
 		msg.append("移动方向:"+direction+"\n");
 		msg.append("移动速度:"+speed+"\n");
-		MessageTools.sendMsgByNickName(msg.toString(),user.getWechatName());
+		msg.append("发送人:"+user+"\n");
+		for (GnrUser gnrUser : gnrUserList) {
+			MessageTools.sendMsgByNickName(msg.toString(),gnrUser.getWechatName());
+		}
 		JSONObject result = new JSONObject();
 		result.put("code", 0);
 		result.put("msg", "success");

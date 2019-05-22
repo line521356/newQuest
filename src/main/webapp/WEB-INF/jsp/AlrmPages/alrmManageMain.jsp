@@ -169,6 +169,7 @@
                     var tr = obj.tr;
                     //获得当前行 tr 的DOM对象
                     var td = tr.find("td");
+
                     if(layEvent === 'detail'){ 	//查看
                         window.open("/alrmRec/video?id="+td.eq(1).text()+"&aRecId="+td.eq(0).text(),"newwindow","height=1080, width=1920, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
                     }
@@ -233,7 +234,8 @@
 							,page: {layout: ['prev', 'page', 'next', 'count', 'skip']} //开启分页
 						    ,limit: 10
 						    ,cols: [[ //表头
-					       	      {field: 'mptId', title: '监控点id'}
+                                  {field: 'aRecId', title: '告警id'}
+					       	      ,{field: 'mptId', title: '监控点id'}
 					       	      ,{field: 'mptName', title: '监控点名称', sort: true}
 					       	      ,{field: 'alarmTime', title: '报警时间', sort: true}
 					       	      ,{field: 'optLongtitude', title: '火点纵坐标'}

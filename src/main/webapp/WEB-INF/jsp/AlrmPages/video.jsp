@@ -74,14 +74,9 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">接收人:</label>
+                        <label class="layui-form-label">发送人:</label>
                         <div class="layui-input-block">
-                            <select name="user" lay-verify="">
-                                <option value="">接收人</option>
-                                <c:forEach var="user" items="${gnrUserList}">
-                                    <option value="${user.gnrUserId}">${user.gnrUserName}</option>
-                                </c:forEach>
-                            </select>
+                           <input name="user" type="text"/>
                         </div>
                     </div>
                     <div class="layui-form-item">

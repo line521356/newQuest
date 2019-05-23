@@ -26,7 +26,7 @@ public class EmergencyPlan implements Serializable{
 	String tempRst;
 	String timeRst;
 	
-	List<Integer> ctRoutes;							//所包含的路径ID
+	List<Integer> ctRoutes;//所包含的路径ID
 
 	public EmergencyPlan() {
 		super();

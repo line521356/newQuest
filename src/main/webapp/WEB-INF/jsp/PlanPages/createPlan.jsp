@@ -61,7 +61,7 @@
 		        </select>
 		      </div>
 		    </div>
-		    
+
 		    <div class="layui-inline">
 		      <label class="layui-form-label">覆盖范围</label>
 		      <div class="layui-input-inline">
@@ -102,14 +102,14 @@
 		        </select>
 		      </div>
 		    </div>
-		    
+
 		    <div class="layui-inline">
 		    	<div class="layui-input-inline">
 		    		<input type="checkbox" name="reverse" lay-skin="primary" title="反向" lay-filter="reverseBox">
 		    	</div>
 		    </div>
-		    
-		    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchRts">计算路线</button>			  			  			
+
+		    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchRts">计算路线</button>
 <!-- 	    	<button class="layui-btn layui-btn-normal" type='button'>查询路线</button> -->
 	    	<div id="rtsTable"></div>
 	    	
@@ -119,10 +119,10 @@
 	  <div class="layui-colla-item">
 	    <h2 class="layui-colla-title">物资点与水源点</h2>
 		<div class="layui-colla-content">
-			
+
 			<div id="cfrmMats"></div>
 			<div id="cfrmWats"></div>
-			
+
 			<div class="layui-inline">
 		      <label class="layui-form-label">物资点</label>
 		      <div class="layui-input-inline">
@@ -135,7 +135,7 @@
 		        </select>
 		      </div>
 		    </div>
-		    
+
 		    <div class="layui-inline">
 		      <label class="layui-form-label">水源点</label>
 		      <div class="layui-input-inline">
@@ -147,11 +147,11 @@
 		          <option value="4">消防栓1</option>
 		        </select>
 		      </div>
-		    </div>	
-		
+		    </div>
+
 			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchPois">查询</button>
 			<button class="layui-btn layui-btn-warm" lay-submit="" lay-filter="srchPoisByRts">根据路线获取</button>
-			
+
 			<div id="matInfoTable"></div>
 			<div id="watInfoTable"></div>
 		</div>
@@ -371,7 +371,7 @@
 	
 	function reviseWater(){
 		layui.use('layer', function(){ //独立版的layer无需执行这一句
-			  var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句	  
+			  var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
 				 layer.open({
 				     id: 'reviseWatWin' //防止重复弹出
 				     ,title: '输入水源点'
@@ -582,7 +582,7 @@
 		
 		  //提交整个表单
 		  form.on('submit(demo1)', function(data){
-		    
+
 			if(materials.join(",").length < 1 || waterSource.join(",").length < 1 || routes.join(",").length < 1){
 				layer.alert("预案缺少关键信息，请检查路线、物资点、水源点、人员等是否完成指定！");
 			} else if((data.field.winForce_min == "" && data.field.winForce_max != "") || (data.field.winForce_min != "" && data.field.winForce_max == "")){
@@ -594,10 +594,10 @@
 			} else {
 										  
 			    //整合所有数据拼成Emergency对象
-				var req = {"materials":materials.join(","), "watersource":waterSource.join(","), 
-			    		"routes":routes.join(","), "crew":crewIDs.join(","), "targetRtID":cfrmEndRts.join(","), 
-			    		"priority":cfrmEndRts.length, "planName":data.field.planName, "planIntro":data.field.planIntro, 
-			    		"wdFrcRst":data.field.winForce_min + "," + data.field.winForce_max, 
+				var req = {"materials":materials.join(","), "watersource":waterSource.join(","),
+			    		"routes":routes.join(","), "crew":crewIDs.join(","), "targetRtID":cfrmEndRts.join(","),
+			    		"priority":cfrmEndRts.length, "planName":data.field.planName, "planIntro":data.field.planIntro,
+			    		"wdFrcRst":data.field.winForce_min + "," + data.field.winForce_max,
 			    		"tempRst":data.field.temp_min + "," + data.field.temp_max,
 			    		"timeRst":data.field.avTime_st + "," + data.field.avTime_ed}
 			    		

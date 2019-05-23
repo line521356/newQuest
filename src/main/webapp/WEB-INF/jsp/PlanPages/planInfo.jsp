@@ -102,7 +102,7 @@
 			     cache : false, //是否使用缓存
 			     type : 'post', //请求方式,post
 			     dataType : "json", //数据传输格式
-			     url : "/emrPlan/planSketch", //请求链接
+			     url : "/map/planSketch", //请求链接
 			     contentType:"application/json",
 			     data:JSON.stringify(avPlans),
 			     error : function() {
@@ -138,7 +138,7 @@
 				     cache : false, //是否使用缓存
 				     type : 'post', //请求方式,post
 				     dataType : "json", //数据传输格式
-				     url : "/emrPlan/planDetInfo", //请求链接
+				     url : "/map/planDetInfo", //请求链接
 				     contentType:"application/json",
 				     data:JSON.stringify(req),
 				     error : function() {

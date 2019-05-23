@@ -274,14 +274,14 @@ public class EmerPlanServiceImpl implements IEmerPlanService {
 
 		List<Integer> targetRtIDs = strToIntList(emergencyPlan.getTargetRtID());
 		List<Integer> massRoutes = strToIntList(emergencyPlan.getRoutes());
-		
+
 		//分路前将目标路径拨正
 		for(int i=0; i<targetRtIDs.size(); i++){
 			if (targetRtIDs.get(i) < 0) {
 				targetRtIDs.set(i, -targetRtIDs.get(i));
 			}
 		}
-		
+
 		int statOrd = 0;
 		for(Integer sidePt : targetRtIDs){
 			int endOrd = massRoutes.indexOf(sidePt);
@@ -296,7 +296,7 @@ public class EmerPlanServiceImpl implements IEmerPlanService {
 			sumLen = Double.parseDouble(df.format(sumLen));
 			if (targetRtIDs.indexOf(sidePt) == targetRtIDs.size()-1) {
 				if(emergencyPlan.getArrTime() != null){
-					emergencyPlan.setArrTime(emergencyPlan.getArrTime() + sumTime + "min");				
+					emergencyPlan.setArrTime(emergencyPlan.getArrTime() + sumTime + "min");
 				} else {
 					emergencyPlan.setArrTime(sumTime + "min");
 				}
@@ -307,7 +307,7 @@ public class EmerPlanServiceImpl implements IEmerPlanService {
 				}
 			} else {
 				if(emergencyPlan.getArrTime() != null){
-					emergencyPlan.setArrTime(emergencyPlan.getArrTime() + sumTime + "min,");				
+					emergencyPlan.setArrTime(emergencyPlan.getArrTime() + sumTime + "min,");
 				} else {
 					emergencyPlan.setArrTime(sumTime + "min,");
 				}
@@ -316,9 +316,9 @@ public class EmerPlanServiceImpl implements IEmerPlanService {
 				} else {
 					emergencyPlan.setRtsLen(sumLen + "km,");
 				}
-			}			
+			}
 			statOrd = endOrd + 1;
-		}				
+		}
 		emerPlanDao.istNewPlan(emergencyPlan);
 	}
 	

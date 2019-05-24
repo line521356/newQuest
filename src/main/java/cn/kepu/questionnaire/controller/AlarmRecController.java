@@ -12,6 +12,8 @@ import cn.kepu.questionnaire.pojo.MonitorPoint;
 import cn.kepu.questionnaire.service.IAlarmRecordService;
 import cn.kepu.questionnaire.service.IMoniterVideoService;
 import cn.kepu.questionnaire.service.IUserService;
+import cn.kepu.questionnaire.utils.Wether;
+import cn.kepu.questionnaire.utils.WetherUtil;
 import cn.zhouyafeng.itchat4j.api.MessageTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -229,12 +231,25 @@ public class AlarmRecController {
 		String intensity = jsonObject.getString("intensity");
 		String direction = jsonObject.getString("direction");
 		String speed = jsonObject.getString("speed");
+		String id = jsonObject.getString("id");
+		MonitorPoint monitorPoint = moniterVideoService.findMonitorPointById(id);
+		Wether wether = null;
+		try {
+			wether = WetherUtil.getNowWether(monitorPoint.getLongtitude()+"",monitorPoint.getLattitude()+"");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		StringBuffer msg = new StringBuffer();
+		msg.append("监控点:"+monitorPoint.getMptName()+"\n");
 		msg.append("火情:"+condition+"\n");
 		msg.append("火势:"+intensity+"\n");
 		msg.append("移动方向:"+direction+"\n");
 		msg.append("移动速度:"+speed+"\n");
 		msg.append("发送人:"+user+"\n");
+		msg.append("降水量:"+wether.getPrecipitation()+"\n");
+		msg.append("温度:"+wether.getTemperature()+"\n");
+		msg.append("风力:"+wether.getWindPower()+"\n");
+		msg.append("湿度:"+wether.getHumidity()+"\n");
 		for (GnrUser gnrUser : gnrUserList) {
 			MessageTools.sendMsgByNickName(msg.toString(),gnrUser.getWechatName());
 		}

@@ -241,6 +241,8 @@ public class AlarmRecController {
 		}
 		StringBuffer msg = new StringBuffer();
 		msg.append("监控点:"+monitorPoint.getMptName()+"\n");
+		msg.append("经度:"+monitorPoint.getLongtitude()+"\n");
+		msg.append("纬度:"+monitorPoint.getLattitude()+"\n");
 		msg.append("火情:"+condition+"\n");
 		msg.append("火势:"+intensity+"\n");
 		msg.append("移动方向:"+direction+"\n");

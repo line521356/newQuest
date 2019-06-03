@@ -57,7 +57,6 @@ public class DecisionTreeUtils {
                 if(count!=0){
                     String[] lines = templine.split(",");
                     ArrayList<String> l = new ArrayList<>();
-                    l.add("占位");
                     for (int i = 0; i < lines.length; i++) {
                         if(i == 0){
                             if(Double.parseDouble(lines[i])>2){

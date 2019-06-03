@@ -1,26 +1,38 @@
 package cn.kepu.questionnaire.utils;
 
-import cn.kepu.questionnaire.vo.WetherVo;
 import com.alibaba.fastjson.JSONObject;
 
 
 public class ConstUtils {
 
+    /**
+     * 古德曼函数，返回纬度
+     * @param distance
+     * @return
+     */
+    private static double countLat(double distance){
+        return (2*Math.atan(Math.pow(Math.E, Math.PI/20037508.3427892*distance)) - Math.PI/2)*180/Math.PI;
+        //return Math.atan(Math.pow(Math.E, Math.PI)) * 180 / Math.PI;
+    }
 
-    public static WetherVo getWetherNow(double optLattitude,double optLongtitude){
-        WetherVo wetherVo = new WetherVo();
-        String url = "http://v.juhe.cn/weather/geo?format=2&key=您申请的KEY&lon="+optLongtitude+"&lat="+optLattitude;
-        String res = HttpClientUtils.doGet(url);
-        JSONObject resJson =JSONObject.parseObject(res);
-        String resCode = resJson.getString("resultcode");
-        if(resCode.equals(200)){
-            JSONObject sk = resJson.getJSONObject("result").getJSONObject("sk");
-            wetherVo.setTemp(sk.getString("temp"));
-            wetherVo.setHumidity(sk.getString("humidity"));
-            wetherVo.setWindDirection(sk.getString("wind_direction"));
-            wetherVo.setWindStrength(sk.getString("wind_strength"));
-        }
-        return wetherVo;
+    /**
+     * 反古德曼函数，返回赤道距离
+     * @param gpsLattitude
+     * @return
+     */
+    private static double countDis(double gpsLattitude){
+        double earthRad = 6378137.0;
+        double a = gpsLattitude * Math.PI / 180;
+        double y = earthRad / 2 * Math.log((1.0 + Math.sin(a)) / (1.0 - Math.sin(a)));
+        return y;
+    }
 
+
+    public static String mapxToGps(String x){
+        return 116.049671 + (Double.valueOf(x)/55.51*197.651473)/85779.66839349142 + "";
+    }
+
+    public static String mapyToGps(String y){
+        return countLat(countDis(40.071171) - ((Double.valueOf(y)/55.51)*197.651473)) + "";
     }
 }

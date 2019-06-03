@@ -9,6 +9,7 @@ import cn.kepu.questionnaire.tree.core.C45Core;
 import cn.kepu.questionnaire.tree.model.AttributeNode;
 import cn.kepu.questionnaire.tree.utils.C45Utils;
 import cn.kepu.questionnaire.tree.utils.DecisionTreeUtils;
+import org.apache.log4j.spi.RootLogger;
 
 public class C45Client {
 
@@ -18,9 +19,9 @@ public class C45Client {
         C45Client c45Client = new C45Client(DecisionTreeUtils.getData());
         AttributeNode attributeNode = c45Client.start();
         List <String> strs = new ArrayList<>();
-        strs.add("大");
+        strs.add("小");
         strs.add("<50");
-        strs.add(">=18");
+        strs.add("8-18");
         strs.add("<4");
         String res = c45Client.findLastLeaf(strs,attributeNode);
         System.out.println(res);
@@ -31,30 +32,34 @@ public class C45Client {
     }
 
     public String findLastLeaf(List<String>row,AttributeNode root){
-        List <AttributeNode> attributeNodes = null;
-        AttributeNode attributeNode = root;
-        Boolean isLeaf = false;
-        for (String s : row) {
-            attributeNodes = attributeNode.getChildNodes();
-            for (AttributeNode node : attributeNodes) {
-                if(node.getAttributeName().equals(s)){
-                    attributeNode = node;
-                    isLeaf = attributeNode.isLeaf();
-                    break;
-                }
-
-            }
-            if(isLeaf){
-                break;
-            }
-        }
-        if(!attributeNode.isLeaf()){
-            attributeNode = attributeNode.getChildNodes().get(0);
-        }
-        return attributeNode.getAttributeName();
+        int count = 0;
+       AttributeNode attributeNode = root;
+       List <AttributeNode> attributeNodeList = null;
+       Boolean flag = false;
+       while(!attributeNode.isLeaf()||attributeNode.getChildNodes() != null||attributeNode.getChildNodes().size() == 0){
+           attributeNodeList = attributeNode.getChildNodes();
+           for (AttributeNode node : attributeNodeList) {
+               if(row.contains(node.getAttributeName())){
+                   attributeNode = node;
+               }
+               flag = node.isLeaf();
+               if(flag){
+                   attributeNode = node;
+                   break;
+               }
+               count++;
+           }
+           if(flag){
+               break;
+           }
+           if(count>2000){
+               return null;
+           }
+       }
+       return attributeNode.getAttributeName();
     }
 
-    private AttributeNode start() {
+    public AttributeNode start() {
         C45Utils.transformContinuouslyVariables(rawData);
         C45Core core = new C45Core();
         return createDecisionTree(core, rawData);

@@ -51,8 +51,8 @@
 			
 
 		<script type="text/html" id="barDemo">
-		  <a class="layui-btn layui-btn-sm" lay-event="chkDet">查看详情</a>
-		  <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="preview">方案预览</a>
+		  <%--<a class="layui-btn layui-btn-sm" lay-event="chkDet">查看详情</a>--%>
+		  <%--<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="preview">方案预览</a>--%>
 		  <a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="revise">编辑</a>		  
 		  <a class="layui-btn layui-btn-primary layui-btn-sm" lay-event="del">删除</a>
 		</script> 
@@ -81,8 +81,8 @@
 					       	      {field: 'planID', title: '预案编号'}
 					       	      ,{field: 'planName', title: '预案名称', sort: true}
 					       	      ,{field: 'planIntro', title: '预案介绍'}
-					       	      ,{field: 'arrTime', title: '预计到达时间', sort: true} 
-					       	      ,{field: 'rtsLen', title: '路程', sort: true}
+					       	      // ,{field: 'arrTime', title: '预计到达时间', sort: true}
+					       	      // ,{field: 'rtsLen', title: '路程', sort: true}
 					       	      ,{align: 'center', title: '操作', width: 350, toolbar: '#barDemo'}
 						    ]]
 						  });
@@ -104,8 +104,8 @@
 			       	      {field: 'planID', title: '预案编号'}
 			       	      ,{field: 'planName', title: '预案名称', sort: true}
 			       	      ,{field: 'planIntro', title: '预案介绍'}
-			       	      ,{field: 'arrTime', title: '预计到达时间', sort: true} 
-			       	      ,{field: 'rtsLen', title: '路程', sort: true}
+			       	      // ,{field: 'arrTime', title: '预计到达时间', sort: true}
+			       	      // ,{field: 'rtsLen', title: '路程', sort: true}
 			       	      ,{align: 'center', title: '操作', width: 350, toolbar: '#barDemo'}
 				    ]]
 				  });
@@ -225,8 +225,8 @@
 				       	      {field: 'planID', title: '预案编号'}
 				       	      ,{field: 'planName', title: '预案名称', sort: true}
 				       	      ,{field: 'planIntro', title: '预案介绍'}
-				       	      ,{field: 'arrTime', title: '预计到达时间', sort: true} 
-				       	      ,{field: 'rtsLen', title: '路程', sort: true}
+				       	      // ,{field: 'arrTime', title: '预计到达时间', sort: true}
+				       	      // ,{field: 'rtsLen', title: '路程', sort: true}
 				       	      ,{align: 'center', title: '操作', width: 350, toolbar: '#barDemo'}
 					    ]]
 				    });							       	 

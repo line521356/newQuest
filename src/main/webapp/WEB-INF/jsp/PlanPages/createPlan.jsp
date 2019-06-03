@@ -46,8 +46,6 @@
 		<div class="layui-colla-content">
 			 
 			<div id="cfrmRtsInfo"></div>
-			 
-			  
 		    <div class="layui-inline">
 		      <label class="layui-form-label">扑救人员</label>
 		      <div class="layui-input-inline">
@@ -61,191 +59,9 @@
 		        </select>
 		      </div>
 		    </div>
-
-		    <div class="layui-inline">
-		      <label class="layui-form-label">覆盖范围</label>
-		      <div class="layui-input-inline">
-		        <select name="endRtID" lay-search="" lay-verify="required">
-		          <option value="">选择终点路径ID，如有疑问可咨询管理员</option>
-		          <option value="1">1</option>
-		          <option value="2">2</option>
-		          <option value="3">3</option>
-		          <option value="4">4</option>
-		          <option value="5">5</option>
-		          <option value="6">6</option>
-		          <option value="7">7</option>
-		          <option value="8">8</option>
-		          <option value="9">9</option>
-		          <option value="10">10</option>
-		          <option value="11">11</option>
-		          <option value="12">12</option>
-		          <option value="13">13</option>
-		          <option value="14">14</option>
-		          <option value="15">15</option>
-		          <option value="16">16</option>
-		          <option value="17">17</option>
-		          <option value="18">18</option>
-		          <option value="19">19</option>
-		          <option value="20">20</option>
-		          <option value="21">21</option>
-		          <option value="22">22</option>
-		          <option value="23">23</option>
-		          <option value="24">24</option>
-		          <option value="30">30</option>
-		          <option value="31">31</option>
-		          <option value="32">32</option>
-		          <option value="33">33</option>
-		          <option value="34">34</option>
-		          <option value="35">35</option>
-		          <option value="36">36</option>
-		          <option value="37">37</option>
-		        </select>
-		      </div>
-		    </div>
-
-		    <div class="layui-inline">
-		    	<div class="layui-input-inline">
-		    		<input type="checkbox" name="reverse" lay-skin="primary" title="反向" lay-filter="reverseBox">
-		    	</div>
-		    </div>
-
-		    <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchRts">计算路线</button>
-<!-- 	    	<button class="layui-btn layui-btn-normal" type='button'>查询路线</button> -->
-	    	<div id="rtsTable"></div>
-	    	
 	    
 	    </div>
 	  </div>
-	  <div class="layui-colla-item">
-	    <h2 class="layui-colla-title">物资点与水源点</h2>
-		<div class="layui-colla-content">
-
-			<div id="cfrmMats"></div>
-			<div id="cfrmWats"></div>
-
-			<div class="layui-inline">
-		      <label class="layui-form-label">物资点</label>
-		      <div class="layui-input-inline">
-		        <select name="material" lay-search="">
-		          <option value="">直接选择或搜索选择</option>
-		          <option value="1">物资点1</option>
-		          <option value="2">物资点2</option>
-		          <option value="3">物资点3</option>
-		          <option value="4">望京塔物资点</option>
-		        </select>
-		      </div>
-		    </div>
-
-		    <div class="layui-inline">
-		      <label class="layui-form-label">水源点</label>
-		      <div class="layui-input-inline">
-		        <select name="waterSrc" lay-search="">
-		          <option value="">直接选择或搜索选择</option>
-		          <option value="1">蓄水池1</option>
-		          <option value="2">蓄水池2</option>
-		          <option value="3">消防栓1</option>
-		          <option value="4">消防栓1</option>
-		        </select>
-		      </div>
-		    </div>
-
-			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="searchPois">查询</button>
-			<button class="layui-btn layui-btn-warm" lay-submit="" lay-filter="srchPoisByRts">根据路线获取</button>
-
-			<div id="matInfoTable"></div>
-			<div id="watInfoTable"></div>
-		</div>
-	  </div>
-	  <div class="layui-colla-item">
-	    <h2 class="layui-colla-title">启用条件（非必填）</h2>
-		<div class="layui-colla-content">
-			<div class="layui-form-item">
-				<div class="layui-inline">
-					<label class="layui-form-label">温度</label>
-					<div class="layui-input-inline" style="width: 100px;">
-						<input type="text" name="temp_min" placeholder="℃"
-							autocomplete="off" class="layui-input" lay-verify="temp">
-					</div>
-					<div class="layui-form-mid">-</div>
-					<div class="layui-input-inline" style="width: 100px;">
-						<input type="text" name="temp_max" placeholder="℃"
-							autocomplete="off" class="layui-input" lay-verify="temp">
-					</div>
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<div class="layui-inline">
-					<label class="layui-form-label">风力</label>
-					<div class="layui-input-inline" style="width: 100px;">
-<!-- 						<input type="text" name="winForce_min" placeholder="风力级别" -->
-<!-- 							autocomplete="off" class="layui-input"> -->
-						<select name="winForce_min" lay-search="">
-					          <option value="">风力级别</option>
-					          <option value="0">0级</option>
-					          <option value="1">1级</option>
-					          <option value="2">2级</option>
-					          <option value="3">3级</option>
-					          <option value="4">4级</option>
-					          <option value="5">5级</option>
-					          <option value="6">6级</option>
-					          <option value="7">7级</option>
-					          <option value="8">8级</option>
-					          <option value="9">9级</option>
-					          <option value="10">10级</option>
-					          <option value="11">11级</option>
-					          <option value="12">12级</option>
-					          <option value="13">13级</option>
-					          <option value="14">14级</option>
-					          <option value="15">15级</option>
-					          <option value="16">16级</option>
-					          <option value="17">17级</option>
-					          <option value="18">18级</option>
-		        		</select>
-					</div>
-					<div class="layui-form-mid">-</div>
-					<div class="layui-input-inline" style="width: 100px;">
-<!-- 						<input type="text" name="winForce_max" placeholder="风力级别" -->
-<!-- 							autocomplete="off" class="layui-input"> -->
-						<select name="winForce_max" lay-search="">
-					          <option value="">风力级别</option>
-					          <option value="0">0级</option>
-					          <option value="1">1级</option>
-					          <option value="2">2级</option>
-					          <option value="3">3级</option>
-					          <option value="4">4级</option>
-					          <option value="5">5级</option>
-					          <option value="6">6级</option>
-					          <option value="7">7级</option>
-					          <option value="8">8级</option>
-					          <option value="9">9级</option>
-					          <option value="10">10级</option>
-					          <option value="11">11级</option>
-					          <option value="12">12级</option>
-					          <option value="13">13级</option>
-					          <option value="14">14级</option>
-					          <option value="15">15级</option>
-					          <option value="16">16级</option>
-					          <option value="17">17级</option>
-					          <option value="18">18级</option>
-		        		</select>
-					</div>
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<div class="layui-inline">
-					<label class="layui-form-label">起止时间</label>
-					<div class="layui-input-block">
-						<input type="text" name="avTime_st" id="avTime_st" autocomplete="off"
-							class="layui-input">
-					</div>
-				</div>
-				<div class="layui-inline">					
-						<input type="text" name="avTime_ed" id="avTime_ed" autocomplete="off"
-							class="layui-input">					
-				</div>
-			</div>
-		</div>
-	  </div>     
 	</div>
 		<button style="margin-left:15cm;" class="layui-btn" lay-submit="" lay-filter="demo1">创建预案</button>
     	<button type="reset" class="layui-btn layui-btn-primary">重置</button> 
@@ -261,9 +77,9 @@
 	var crewIDs = new Array();			//扑救人员ID集合
 	var routes = new Array();			//路径集合，每一项是条完整路线， 对应到人员
 	var cfrmCrNames = new Array();		//扑救人员名称集合
-	var cfrmEndRts = new Array();		//目标路径集合
-	var materials = new Array();		//物资点集合
-	var waterSource = new Array();		//水源点集合
+    var cfrmEndRts = new Array();		//目标路径集合
+    var materials = new Array();		//物资点集合
+    var waterSource = new Array();		//水源点集合
 
 	var rtTbStatus = 0;				//路径表格的状态，0表示目前rtTb目前为空，1表示目前rtTb目前非空，下面两个相同
 	var matTbStatus = 0;
@@ -582,24 +398,9 @@
 		
 		  //提交整个表单
 		  form.on('submit(demo1)', function(data){
-
-			if(materials.join(",").length < 1 || waterSource.join(",").length < 1 || routes.join(",").length < 1){
-				layer.alert("预案缺少关键信息，请检查路线、物资点、水源点、人员等是否完成指定！");
-			} else if((data.field.winForce_min == "" && data.field.winForce_max != "") || (data.field.winForce_min != "" && data.field.winForce_max == "")){
-				layer.alert("请完善风力限制区间！");
-			} else if((data.field.temp_min == "" && data.field.temp_max != "") || (data.field.temp_min != "" && data.field.temp_max == "")){
-				layer.alert("请完善温度限制区间！");
-			} else if((data.field.avTime_st == "" && data.field.avTime_ed != "") || (data.field.avTime_st != "" && data.field.avTime_ed == "")){
-				layer.alert("请完善时间限制区间！");
-			} else {
 										  
 			    //整合所有数据拼成Emergency对象
-				var req = {"materials":materials.join(","), "watersource":waterSource.join(","),
-			    		"routes":routes.join(","), "crew":crewIDs.join(","), "targetRtID":cfrmEndRts.join(","),
-			    		"priority":cfrmEndRts.length, "planName":data.field.planName, "planIntro":data.field.planIntro,
-			    		"wdFrcRst":data.field.winForce_min + "," + data.field.winForce_max,
-			    		"tempRst":data.field.temp_min + "," + data.field.temp_max,
-			    		"timeRst":data.field.avTime_st + "," + data.field.avTime_ed}
+				var req = {"crew":crewIDs.join(","), "planName":data.field.planName, "planIntro":data.field.planIntro}
 			    		
 				$.ajax( {
 				     async : false, //这里不开异步，以防点数据赋值混乱
@@ -620,7 +421,6 @@
 				       	 }				    	 				       
 				     }
 				});
-			}
 		    console.log(JSON.stringify(req));
 		    
 		    return false;

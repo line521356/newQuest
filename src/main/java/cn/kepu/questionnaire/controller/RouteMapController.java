@@ -7,6 +7,10 @@ import cn.kepu.questionnaire.pojo.EmergencyPlan;
 import cn.kepu.questionnaire.pojo.Location;
 import cn.kepu.questionnaire.pojo.Route;
 import cn.kepu.questionnaire.service.IRouteMapService;
+import cn.kepu.questionnaire.service.ITrainingDataService;
+import cn.kepu.questionnaire.utils.ConstUtils;
+import cn.kepu.questionnaire.utils.Wether;
+import cn.kepu.questionnaire.utils.WetherUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -25,6 +29,9 @@ public class RouteMapController {
 	@Autowired
 	@Qualifier("routemapService")
 	private IRouteMapService routemapService;
+
+	@Autowired
+	private ITrainingDataService iTrainingDataService;
 	
 
 	//测试ARCGIS JS API
@@ -130,38 +137,75 @@ public class RouteMapController {
 	public JSONObject testSegment(@RequestBody Location location){
 		JSONObject result = new JSONObject();
 		List<List<Location>> poisInPlan = new ArrayList<List<Location>>();
-		int scorePlanID;     //被最终选定的预案ID
+		Integer scorePlanID;     //被最终选定的预案ID
 		
-		if (location.getZmLev() > 1) {										//放大地图重定位火点
+		if (location.getZmLev() > 1) {//放大地图重定位火点
 			location = routemapService.repositionFP(location);
 		}
-		
-		if (location.getZmLev() > 1 && location.getRtID() != -1) {			//这里rtID代表的是预案ID，只是为了和location对象的能绑定所以没改名
-			scorePlanID = location.getRtID();								//放缩级别大于1且预案ID有效，那么不再计算，直接加载预案			
-		} else if (location.getZmLev() == 1 && location.getRtID() != -1) {	//放缩级别为1但是预案ID有效，用于切换预案和缩小到1级地图
-			scorePlanID = location.getRtID();
-		} else{																		//原始获得预案，参数为(1,-1)，这里获得两个值，一个预案的rank，然后rank排名1的加载具体预案信息		
-			List<EmergencyPlan> candPlans = routemapService.chkSegs(location);
-			scorePlanID = candPlans.get(candPlans.size()-1).getPlanID();			//最终要改成选第一个，这里只是想加载只有一条路的预案
-			result.put("availablePlans", candPlans);
+		String lon = ConstUtils.mapxToGps(location.getPointX()+"");
+		String lat = ConstUtils.mapyToGps(location.getPointY()+"");
+
+		Wether wether = null;
+		try {
+			wether = WetherUtil.getNowWether(lon,lat);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		List<List<Location>> driveWay = routemapService.driveWaysInPlan(scorePlanID, location);
-		List<List<Location>> path = routemapService.pathsInPlan(scorePlanID, location);
-		poisInPlan = routemapService.poiInPlan(scorePlanID,location);
-				
-		if (poisInPlan.size() < 3) {		//物资点、人员驻扎点、水源点是否齐全
-			result.put("msg", 0);
-			return result;
+		//训练数据
+		List <String> row = new ArrayList<>();
+
+		row.add(Double.parseDouble(wether.getPrecipitation())>2?"大":"小");
+		Double temp = Double.parseDouble(wether.getTemperature());
+		if(temp<0){
+			row.add("<0");
+		}else if(temp>=0&&temp<8){
+			row.add("0-8");
+		}else if(temp>=8&&temp<18){
+			row.add("8-18");
+		}else if(temp>=18){
+			row.add(">=18");
 		}
-		
-		result.put("driveWay", driveWay);
-		result.put("path", path);
-		result.put("materials", poisInPlan.get(0));
-		result.put("watersource", poisInPlan.get(1));
-		result.put("crewStays", poisInPlan.get(2));
-		result.put("scorePlanID", scorePlanID);
-		result.put("msg", 1);
+		Double wind = Double.parseDouble(wether.getWindPower());
+		if(wind>4){
+			row.add(">4");
+		}else{
+			row.add("<4");
+		}
+		Double rh = Double.parseDouble(wether.getHumidity());
+		if(rh<50){
+			row.add("<50");
+		}else if(rh>=50&&rh<65){
+			row.add("50-65");
+		}else if(rh>=65&&rh<80){
+			row.add("65-80");
+		}else if(rh>=80){
+			row.add(">=80");
+		}
+
+		scorePlanID = iTrainingDataService.trainData(row);
+		result.put("availablePlans", scorePlanID);
+
+		if (scorePlanID != null) {
+			List<List<Location>> driveWay = routemapService.driveWaysInPlan(scorePlanID, location);
+			List<List<Location>> path = routemapService.pathsInPlan(scorePlanID, location);
+			poisInPlan = routemapService.poiInPlan(scorePlanID,location);
+
+			if (poisInPlan.size() < 3) {		//物资点、人员驻扎点、水源点是否齐全
+				result.put("msg", 0);
+				return result;
+			}
+
+			result.put("driveWay", driveWay);
+			result.put("path", path);
+			result.put("materials", poisInPlan.get(0));
+			result.put("watersource", poisInPlan.get(1));
+			result.put("crewStays", poisInPlan.get(2));
+			result.put("scorePlanID", scorePlanID);
+			result.put("msg", 1);
+		}else{
+			result.put("msg", "无可用方案");
+		}
+
 		return result;
 	}
 	
@@ -186,7 +230,6 @@ public class RouteMapController {
 	
 	/**
 	 * 小窗口-切换预案-获取预案梗概
-	 * @param emergencyPlan
 	 * @return
 	 */
 	@RequestMapping("/planSketch")
@@ -201,7 +244,6 @@ public class RouteMapController {
 	
 	/**
 	 * 小窗口-获取当前预案的详情
-	 * @param emergencyPlan
 	 * @return
 	 */
 	@RequestMapping("/planDetInfo")

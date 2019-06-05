@@ -587,7 +587,12 @@ public class EmerPlanServiceImpl implements IEmerPlanService {
 		}
 		return result;
 	}
-	
+
+	@Override
+	public EmergencyPlan selPlanByID(Integer planID) {
+		return emerPlanDao.selPlanById(planID);
+	}
+
 	/**
 	 * 修改物资点-回显物资点信息
 	 */
@@ -614,7 +619,17 @@ public class EmerPlanServiceImpl implements IEmerPlanService {
 		//crew.setPosition(emerPlanDao.selLocByCrewID(crewID));		不再显示位置，只显示关联路径
 		return crew;
 	}
-	
+
+	@Override
+	public List<Location> selAllLocation(Integer zmLev) {
+		return emerPlanDao.selAllLocation(zmLev);
+	}
+
+	@Override
+	public void updatePlanRoute(EmergencyPlan emergencyPlan) {
+		emerPlanDao.updatePlanRoute(emergencyPlan);
+	}
+
 	private List<Integer> strToIntList(String str){
 		String[] strArr = str.split(",");
 		List<Integer> intList = new ArrayList<Integer>();

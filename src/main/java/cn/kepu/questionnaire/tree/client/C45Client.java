@@ -16,15 +16,16 @@ public class C45Client {
     private List<List<String>> rawData;
 
     public static void main(String[] args) throws IOException {
-        C45Client c45Client = new C45Client(DecisionTreeUtils.getData());
-        AttributeNode attributeNode = c45Client.start();
-        List <String> strs = new ArrayList<>();
-        strs.add("小");
-        strs.add("<50");
-        strs.add("8-18");
-        strs.add("<4");
-        String res = c45Client.findLastLeaf(strs,attributeNode);
-        System.out.println(res);
+//        C45Client c45Client = new C45Client(DecisionTreeUtils.getData());
+//        AttributeNode attributeNode = c45Client.start();
+//        List <String> strs = new ArrayList<>();
+//        strs.add("小");
+//        strs.add("<50");
+//        strs.add("8-18");
+//        strs.add("<4");
+//        String res = c45Client.findLastLeaf(strs,attributeNode);
+//        System.out.println(res);
+
     }
 
     public C45Client(List<List<String>> rawData) {

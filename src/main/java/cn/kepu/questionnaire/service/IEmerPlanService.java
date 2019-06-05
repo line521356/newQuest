@@ -2,10 +2,7 @@ package cn.kepu.questionnaire.service;
 
 import java.util.List;
 
-import cn.kepu.questionnaire.pojo.Crew;
-import cn.kepu.questionnaire.pojo.EmergencyPlan;
-import cn.kepu.questionnaire.pojo.Material;
-import cn.kepu.questionnaire.pojo.WaterSource;
+import cn.kepu.questionnaire.pojo.*;
 import com.alibaba.fastjson.JSONObject;
 
 
@@ -31,6 +28,8 @@ public interface IEmerPlanService {
 	JSONObject PlanAllList(Integer page, Integer limit);
 	
 	JSONObject ffSrcList(Integer listTyep, Integer page, Integer limit);
+
+	EmergencyPlan selPlanByID(Integer planID);
 	
 	void createPlan(EmergencyPlan emergencyPlan);
 	
@@ -56,4 +55,7 @@ public interface IEmerPlanService {
 	
 	Crew priCrewInfo(Integer crewID);
 
+	List<Location> selAllLocation(Integer zmLev);
+
+	void updatePlanRoute(EmergencyPlan emergencyPlan);
 }

@@ -46,10 +46,18 @@
 		<select id="selPlansByName" parameterType="java.lang.String" resultType="cn.kepu.questionnaire.pojo.EmergencyPlan">
 			select * from emergencyplan where planName like concat(concat("%",#{planName}),"%")
 		</select>
+
+	<select id="selPlanById" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.EmergencyPlan">
+			select * from emergencyplan where planID = #{planID}
+		</select>
 		
 		<select id="selMatsByName" parameterType="java.lang.String" resultType="cn.kepu.questionnaire.pojo.Material">
 			select * from material where matName like concat(concat("%",#{matName}),"%")
 		</select>
+
+	<select id="selAllLocation" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Location">
+		 select * from location l where l.zmLev = #{zmLev}
+	</select>
 		
 		<select id="selWatsByName" parameterType="java.lang.String" resultType="cn.kepu.questionnaire.pojo.WaterSource">
 			select * from watersource where watSrName like concat(concat("%",#{watSrName}),"%")
@@ -199,6 +207,10 @@
 		    where zmLev = #{zmLev,jdbcType=INTEGER} 
 		    and sptOrdInRt = #{sptOrdInRt,jdbcType=INTEGER} 
 		    and ptType = #{ptType,jdbcType=INTEGER}
- 	   </update>	   
+ 	   </update>
+
+	<update id="updatePlanRoute" parameterType="cn.kepu.questionnaire.pojo.EmergencyPlan">
+		update emergencyPlan set routes=#{routes} where planID=#{planID}
+	</update>
   
 </mapper>

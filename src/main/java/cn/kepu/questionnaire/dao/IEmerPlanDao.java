@@ -22,6 +22,8 @@ public interface IEmerPlanDao {
 	List<WaterSource> selWatByRtId(Integer rtID);
 	
 	List<EmergencyPlan> selAllPlans();
+
+	EmergencyPlan selPlanById(Integer planID);
 	
 	List<Material> selAllMats();
 	
@@ -74,5 +76,8 @@ public interface IEmerPlanDao {
 	Location selLocByCrewID(Integer srcID);
 	
 	Location selFirstPtInRt(@Param("rtID")Integer rtID, @Param("zmLev")Integer zmLev);			//选取路径的第一个点
-	
+
+    List<Location> selAllLocation(Integer zmLev);
+
+	void updatePlanRoute(EmergencyPlan emergencyPlan);
 }

@@ -2,15 +2,20 @@ package cn.kepu.questionnaire.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import cn.kepu.questionnaire.pojo.EmergencyPlan;
 import cn.kepu.questionnaire.pojo.Location;
 import cn.kepu.questionnaire.pojo.Route;
+import cn.kepu.questionnaire.service.IEmerPlanService;
 import cn.kepu.questionnaire.service.IRouteMapService;
 import cn.kepu.questionnaire.service.ITrainingDataService;
+import cn.kepu.questionnaire.service.impl.EmerPlanServiceImpl;
 import cn.kepu.questionnaire.utils.ConstUtils;
 import cn.kepu.questionnaire.utils.Wether;
 import cn.kepu.questionnaire.utils.WetherUtil;
+import com.alibaba.fastjson.JSONArray;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -32,6 +37,9 @@ public class RouteMapController {
 
 	@Autowired
 	private ITrainingDataService iTrainingDataService;
+
+	@Autowired
+	private IEmerPlanService emerPlanService;
 	
 
 	//测试ARCGIS JS API
@@ -158,11 +166,11 @@ public class RouteMapController {
 		Double temp = Double.parseDouble(wether.getTemperature());
 		if(temp<0){
 			row.add("<0");
-		}else if(temp>=0&&temp<8){
+		}else if(temp<8){
 			row.add("0-8");
-		}else if(temp>=8&&temp<18){
+		}else if(temp<18){
 			row.add("8-18");
-		}else if(temp>=18){
+		}else{
 			row.add(">=18");
 		}
 		Double wind = Double.parseDouble(wether.getWindPower());
@@ -174,37 +182,58 @@ public class RouteMapController {
 		Double rh = Double.parseDouble(wether.getHumidity());
 		if(rh<50){
 			row.add("<50");
-		}else if(rh>=50&&rh<65){
+		}else if(rh<65){
 			row.add("50-65");
-		}else if(rh>=65&&rh<80){
+		}else if(rh<80){
 			row.add("65-80");
-		}else if(rh>=80){
+		}else{
 			row.add(">=80");
 		}
 
 		scorePlanID = iTrainingDataService.trainData(row);
 		result.put("availablePlans", scorePlanID);
-
-		if (scorePlanID != null) {
-			List<List<Location>> driveWay = routemapService.driveWaysInPlan(scorePlanID, location);
-			List<List<Location>> path = routemapService.pathsInPlan(scorePlanID, location);
-			poisInPlan = routemapService.poiInPlan(scorePlanID,location);
-
-			if (poisInPlan.size() < 3) {		//物资点、人员驻扎点、水源点是否齐全
-				result.put("msg", 0);
-				return result;
-			}
-
-			result.put("driveWay", driveWay);
-			result.put("path", path);
-			result.put("materials", poisInPlan.get(0));
-			result.put("watersource", poisInPlan.get(1));
-			result.put("crewStays", poisInPlan.get(2));
-			result.put("scorePlanID", scorePlanID);
-			result.put("msg", 1);
-		}else{
-			result.put("msg", "无可用方案");
+		if(scorePlanID == null){
+			result.put("msg", 0);
+			return result;
 		}
+
+		List <Location> locations = emerPlanService.selAllLocation(location.getZmLev());
+		Integer endId = null;
+		Double min = 10000D;
+		for (Location location1 : locations) {
+			Double tmp = Math.sqrt((location1.getPointX()-location.getPointX())*(location1.getPointX()-location.getPointX())+(location1.getPointY()-location.getPointY())*(location1.getPointY()-location.getPointY()));
+			if(tmp<min){
+				endId = location1.getRtID();
+				min = tmp;
+			}
+		}
+		EmergencyPlan emergencyPlan  = emerPlanService.selPlanByID(scorePlanID);
+		JSONObject wayResult = emerPlanService.srchRoutes(Integer.parseInt(emergencyPlan.getCrew().split(",")[0]), endId);
+		JSONArray jsonArray = wayResult.getJSONArray("routes");
+		List <String> routsStrList = new ArrayList<>();
+		for (Object o : jsonArray) {
+			routsStrList.add(JSONObject.parseObject(JSONObject.toJSONString(o),Route.class).getRtID()+"");
+		}
+		emergencyPlan.setRoutes(StringUtils.join(routsStrList,","));
+		emergencyPlan.setArrTime(null);
+		emerPlanService.updatePlanRoute(emergencyPlan);
+
+		List<List<Location>> driveWay = routemapService.driveWaysInPlan(scorePlanID, location);
+		List<List<Location>> path = routemapService.pathsInPlan(scorePlanID, location);
+		poisInPlan = routemapService.poiInPlan(scorePlanID, location);
+
+		if (poisInPlan.size() < 3) {        //物资点、人员驻扎点、水源点是否齐全
+			result.put("msg", 0);
+			return result;
+		}
+
+		result.put("driveWay", driveWay);
+		result.put("path", path);
+		result.put("materials", poisInPlan.get(0));
+		result.put("watersource", poisInPlan.get(1));
+		result.put("crewStays", poisInPlan.get(2));
+		result.put("scorePlanID", scorePlanID);
+		result.put("msg", 1);
 
 		return result;
 	}

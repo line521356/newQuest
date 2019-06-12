@@ -211,8 +211,9 @@ public class RouteMapController {
 		}
 		EmergencyPlan emergencyPlan  = emerPlanService.selPlanByID(scorePlanID);
 		List <String> routsStrList = new ArrayList<>();
-		List <String> wayList = Arrays.asList(emergencyPlan.getRoutes().split(","));
+		List <String> wayList = Arrays.asList(emergencyPlan.getCrew().split(","));
 		for (String s : wayList) {
+
 			Crew crew = emerPlanService.selCrewById(Integer.parseInt(s));
 			JSONObject wayResult = emerPlanService.srchRoutes(crew.getRtID(), endId);
 			JSONArray jsonArray = wayResult.getJSONArray("routes");

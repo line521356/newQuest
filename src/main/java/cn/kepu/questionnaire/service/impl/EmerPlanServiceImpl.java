@@ -630,6 +630,11 @@ public class EmerPlanServiceImpl implements IEmerPlanService {
 		emerPlanDao.updatePlanRoute(emergencyPlan);
 	}
 
+	@Override
+	public Crew selCrewById(Integer id) {
+		return emerPlanDao.selCrewById(id);
+	}
+
 	private List<Integer> strToIntList(String str){
 		String[] strArr = str.split(",");
 		List<Integer> intList = new ArrayList<Integer>();

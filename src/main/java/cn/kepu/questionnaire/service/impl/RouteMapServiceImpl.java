@@ -128,7 +128,7 @@ public class RouteMapServiceImpl implements IRouteMapService {
 		Collections.sort(candPlans, new Comparator() {
 			@Override
 	        public int compare(Object o1, Object o2) {  
-	            EmergencyPlan ep1=(EmergencyPlan)o1;  
+	            EmergencyPlan ep1=(EmergencyPlan)o1;  ng
 	            EmergencyPlan ep2=(EmergencyPlan)o2;  
 	            return -ep1.getPriority().compareTo(ep2.getPriority());  
 	        } 		
@@ -357,7 +357,7 @@ public class RouteMapServiceImpl implements IRouteMapService {
 					driveWay.add(cutRoute(curRoute, firePoint));
 				} else {
 					driveWay.add(curRoute);
-				}				
+				}
 			}
 		}
 		

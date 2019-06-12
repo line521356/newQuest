@@ -80,4 +80,6 @@ public interface IEmerPlanDao {
     List<Location> selAllLocation(Integer zmLev);
 
 	void updatePlanRoute(EmergencyPlan emergencyPlan);
+
+	Crew selCrewById(Integer id);
 }

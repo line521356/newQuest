@@ -1,9 +1,11 @@
 package cn.kepu.questionnaire.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 
+import cn.kepu.questionnaire.pojo.Crew;
 import cn.kepu.questionnaire.pojo.EmergencyPlan;
 import cn.kepu.questionnaire.pojo.Location;
 import cn.kepu.questionnaire.pojo.Route;
@@ -144,7 +146,7 @@ public class RouteMapController {
 	@ResponseBody
 	public JSONObject testSegment(@RequestBody Location location){
 		JSONObject result = new JSONObject();
-		List<List<Location>> poisInPlan = new ArrayList<List<Location>>();
+		List<List<Location>> poisInPlan = null;
 		Integer scorePlanID;     //被最终选定的预案ID
 		
 		if (location.getZmLev() > 1) {//放大地图重定位火点
@@ -208,12 +210,17 @@ public class RouteMapController {
 			}
 		}
 		EmergencyPlan emergencyPlan  = emerPlanService.selPlanByID(scorePlanID);
-		JSONObject wayResult = emerPlanService.srchRoutes(Integer.parseInt(emergencyPlan.getCrew().split(",")[0]), endId);
-		JSONArray jsonArray = wayResult.getJSONArray("routes");
 		List <String> routsStrList = new ArrayList<>();
-		for (Object o : jsonArray) {
-			routsStrList.add(JSONObject.parseObject(JSONObject.toJSONString(o),Route.class).getRtID()+"");
+		List <String> wayList = Arrays.asList(emergencyPlan.getRoutes().split(","));
+		for (String s : wayList) {
+			Crew crew = emerPlanService.selCrewById(Integer.parseInt(s));
+			JSONObject wayResult = emerPlanService.srchRoutes(crew.getRtID(), endId);
+			JSONArray jsonArray = wayResult.getJSONArray("routes");
+			for (Object o : jsonArray) {
+				routsStrList.add(JSONObject.parseObject(JSONObject.toJSONString(o),Route.class).getRtID()+"");
+			}
 		}
+
 		emergencyPlan.setRoutes(StringUtils.join(routsStrList,","));
 		emergencyPlan.setArrTime(null);
 		emerPlanService.updatePlanRoute(emergencyPlan);

@@ -16,7 +16,7 @@
 		</select>
 
 		<select id="selCrewById" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Crew">
-			select * from crew where crawID = #{id}
+			select * from crew where crewID = #{id}
 		</select>
 		
 		<select id="selCrewNameByCrId" parameterType="java.lang.Integer" resultType="java.lang.String">

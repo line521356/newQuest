@@ -506,14 +506,14 @@ function getRoute(zmLev,rtID){
 }
 
 //目前这个函数比较完整了，根据火点位置加载POI，后续可以改函数名，注意rtID是指预案ID，不改只是为了和Location对象绑定
-function testSegment(zmLev, planID){
+function testSegment(zmLev, planID,pointId){
 
   if(fpCofirmed < 1){
 	  alert("请先定位火点");
   } else {
 	  
-	  var req = {"zmLev":zmLev,"rtID":planID, "pointX":parseInt(fpXFixed), "pointY":parseInt(fpYFixed), "sptOrdInRt":parseInt(curWdForce), "ptType":parseInt(curTemp)};   //这里传的是路径ID不再是getRoute里面的方案ID
-
+	  var req = {"zmLev":zmLev,"pointID":pointId,"rtID":planID, "pointX":parseInt(fpXFixed), "pointY":parseInt(fpYFixed), "sptOrdInRt":parseInt(curWdForce), "ptType":parseInt(curTemp)};   //这里传的是路径ID不再是getRoute里面的方案ID
+      console.log(req);
 	  $.ajax( {
 	     async : false, //这里不开异步，以防点数据赋值混乱
 	     cache : false, //是否使用缓存
@@ -526,7 +526,7 @@ function testSegment(zmLev, planID){
 	       alert('网络故障！');
 	     },
 	     success : function(data) {
-	       if(data.msg == 1){
+	       if(data.code == 1){
 	    	 console.log("后台已获取距离火点最近的路径!");
 	         driveWay = data.driveWay;
 	         path = data.path;
@@ -560,7 +560,9 @@ function testSegment(zmLev, planID){
 	           hasRoute = 1;
 	         }
 
-	       }
+	       }else{
+	           alert(data.msg)
+           }
 
 	     }
 	   });

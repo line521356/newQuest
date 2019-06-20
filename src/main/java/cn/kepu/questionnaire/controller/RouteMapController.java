@@ -5,11 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 
-import cn.kepu.questionnaire.pojo.Crew;
-import cn.kepu.questionnaire.pojo.EmergencyPlan;
-import cn.kepu.questionnaire.pojo.Location;
-import cn.kepu.questionnaire.pojo.Route;
+import cn.kepu.questionnaire.pojo.*;
 import cn.kepu.questionnaire.service.IEmerPlanService;
+import cn.kepu.questionnaire.service.IMessageService;
 import cn.kepu.questionnaire.service.IRouteMapService;
 import cn.kepu.questionnaire.service.ITrainingDataService;
 import cn.kepu.questionnaire.service.impl.EmerPlanServiceImpl;
@@ -42,6 +40,9 @@ public class RouteMapController {
 
 	@Autowired
 	private IEmerPlanService emerPlanService;
+
+	@Autowired
+	private IMessageService iMessageService;
 	
 
 	//测试ARCGIS JS API
@@ -230,8 +231,19 @@ public class RouteMapController {
 		poisInPlan = routemapService.poiInPlan(scorePlanID, location);
 
 		if (poisInPlan.size() < 3) {        //物资点、人员驻扎点、水源点是否齐全
-			result.put("msg", 0);
+			result.put("code", 0);
+			result.put("msg", "物资点、人员驻扎点、水源点不齐全");
 			return result;
+		}
+		Message message = iMessageService.getMessageByMptId(location.getPointID());
+		if(message == null){
+			result.put("code", 0);
+			result.put("msg", "请先做火情判定");
+			return result;
+		}
+		if(message.getCondition().equals("大")
+				&&Integer.parseInt(message.getWindPower())>4){
+
 		}
 
 		result.put("driveWay", driveWay);
@@ -240,9 +252,34 @@ public class RouteMapController {
 		result.put("watersource", poisInPlan.get(1));
 		result.put("crewStays", poisInPlan.get(2));
 		result.put("scorePlanID", scorePlanID);
-		result.put("msg", 1);
+		result.put("code", 1);
 
 		return result;
+	}
+
+	private Boolean isReverse(double x1,double y1,double x2,double y2,String direction){
+		double k = (y2-y1)/(x2-x1);
+		String tmp = "";
+		if((y2-y1>0&&x2-x1>0&&k>0.5)||(y2-y1<0&&x2-x1>0&&k>0.5)){
+			tmp = "1";//北
+		}else if((y2-y1<0&&x2-x1<0&&k<0.5)||(y2-y1>0&&x2-x1<0&&k<0.5)){
+			tmp = "2";//东
+		}else if((y2-y1<0&&x2-x1<0&&k>0.5)||(y2-y1>0&&x2-x1<0&&k>0.5)){
+			tmp = "-2";//西
+		}else if((y2-y1<0&&x2-x1>0&&k<0.5)||(y2-y1>0&&x2-x1>0&&k<0.5)){
+			tmp = "-1";//南
+		}
+		switch (direction){
+			case "东":direction = "2";break;
+			case "南":direction = "-1";break;
+			case "西":direction = "-2";break;
+			case "北":direction = "1";break;
+
+		}
+		if(Integer.parseInt(direction)+Integer.parseInt(tmp)==0){
+			return true;
+		}
+		return false;
 	}
 	
 	

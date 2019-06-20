@@ -5,11 +5,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import cn.kepu.questionnaire.pojo.AlarmRecord;
-import cn.kepu.questionnaire.pojo.GnrUser;
-import cn.kepu.questionnaire.pojo.MoniterVideo;
-import cn.kepu.questionnaire.pojo.MonitorPoint;
+import cn.kepu.questionnaire.pojo.*;
 import cn.kepu.questionnaire.service.IAlarmRecordService;
+import cn.kepu.questionnaire.service.IMessageService;
 import cn.kepu.questionnaire.service.IMoniterVideoService;
 import cn.kepu.questionnaire.service.IUserService;
 import cn.kepu.questionnaire.utils.Wether;
@@ -46,6 +44,9 @@ public class AlarmRecController {
 
 	@Autowired
 	private IUserService userService;
+
+	@Autowired
+	private IMessageService messageService;
 	
 	
 	//-------------------------pure dispatcher---------------------- 
@@ -240,21 +241,33 @@ public class AlarmRecController {
 			e.printStackTrace();
 		}
 		StringBuffer msg = new StringBuffer();
-		msg.append("监控点:"+monitorPoint.getMptName()+"\n");
-		msg.append("经度:"+monitorPoint.getLongtitude()+"\n");
-		msg.append("纬度:"+monitorPoint.getLattitude()+"\n");
-		msg.append("火情:"+condition+"\n");
-		msg.append("火势:"+intensity+"\n");
-		msg.append("移动方向:"+direction+"\n");
-		msg.append("移动速度:"+speed+"\n");
-		msg.append("发送人:"+user+"\n");
-		msg.append("降水量:"+wether.getPrecipitation()+"\n");
-		msg.append("温度:"+wether.getTemperature()+"\n");
-		msg.append("风力:"+wether.getWindPower()+"\n");
-		msg.append("湿度:"+wether.getHumidity()+"\n");
+		msg.append("监控点:").append(monitorPoint.getMptName()).append("\n");
+		msg.append("经度:").append(monitorPoint.getLongtitude()).append("\n");
+		msg.append("纬度:").append(monitorPoint.getLattitude()).append("\n");
+		msg.append("火情:").append(condition).append("\n");
+		msg.append("火势:").append(intensity).append("\n");
+		msg.append("移动方向:").append(direction).append("\n");
+		msg.append("移动速度:").append(speed).append("\n");
+		msg.append("发送人:").append(user).append("\n");
+		msg.append("降水量:").append(wether.getPrecipitation()).append("\n");
+		msg.append("温度:").append(wether.getTemperature()).append("\n");
+		msg.append("风力:").append(wether.getWindPower()).append("\n");
+		msg.append("湿度:").append(wether.getHumidity()).append("\n");
 		for (GnrUser gnrUser : gnrUserList) {
 			MessageTools.sendMsgByNickName(msg.toString(),gnrUser.getWechatName());
 		}
+		Message message = new Message();
+		message.setCondition(condition);
+		message.setIntensity(intensity);
+		message.setDirection(direction);
+		message.setSpeed(speed);
+		message.setUser(user);
+		message.setPrecipitation(wether.getPrecipitation());
+		message.setTemperature(wether.getTemperature());
+		message.setWindPower(wether.getWindPower());
+		message.setHumidity(wether.getHumidity());
+		message.setPointId(Integer.parseInt(id));
+		messageService.saveMessage(message);
 		JSONObject result = new JSONObject();
 		result.put("code", 0);
 		result.put("msg", "success");

@@ -25,6 +25,7 @@
 <!-- 						<th lay-data="{type:'checkbox', fixed: 'left'}"></th> -->
 						<th lay-data="{field:'aRecId', width:100, sort: true}">记录编号</th>
 						<th lay-data="{field:'mptName', width:150, sort: true}">监控点名称</th>
+						<th lay-data="{field:'mptId', width:150, sort: true}">监控点id</th>
 						<th lay-data="{field:'alarmTime', width:180, sort: true}">报警时间</th>
 						<th lay-data="{field:'optLongtitude', width:120}">火点纵坐标</th>
 						<th lay-data="{field:'optLattitude', width:120}">火点横坐标</th>
@@ -153,7 +154,7 @@
 						  var index = parent.layer.getFrameIndex(window.name);
 						  parent.layer.close(index);
 					  } else if(layEvent === 'showPlan'){
-						  parent.testSegment(1, -1);
+						  parent.testSegment(1, -1,td.eq(2).text());
 						  var index = parent.layer.getFrameIndex(window.name);
 						  parent.layer.close(index);
 					  } 					  					 

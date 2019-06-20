@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kepu.questionnaire.dao.IMessageDao" >
+
+    <select id="getMessageById" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Message">
+        select * from message where id = #{id}
+    </select>
+
+    <select id="getMessageByMptId" parameterType="java.lang.Integer" resultType="cn.kepu.questionnaire.pojo.Message">
+        select * from message where point_id = #{pointId}
+    </select>
+
+    <delete id="deleteMessage">
+        delete from message where point_id = #{pointId}
+    </delete>
+
+  <insert id="saveMessage" parameterType="cn.kepu.questionnaire.pojo.Message">
+    insert into message(`condition`,intensity,direction,speed,`user`,precipitation,temperature,wind_power,humidity,point_id) values (#{condition},#{intensity},#{direction},#{speed},#{user},#{precipitation},#{temperature},#{windPower},#{humidity},#{pointId})
+  </insert>
+
+  
+</mapper>

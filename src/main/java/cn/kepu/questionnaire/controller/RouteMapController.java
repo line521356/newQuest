@@ -243,7 +243,14 @@ public class RouteMapController {
 		}
 		if(message.getCondition().equals("大")
 				&&Integer.parseInt(message.getWindPower())>4){
-
+			List <Location> locationList = path.get(path.size() - 1);
+			Location start = locationList.get(path.size() - 2);
+			Location end = locationList.get(path.size() - 1);
+			if(isReverse(start.getPointX(),start.getPointY(),end.getPointX(),end.getPointY(),message.getDirection())){
+				result.put("code", 0);
+				result.put("msg", "当前无合适路线以供选择");
+				return result;
+			}
 		}
 
 		result.put("driveWay", driveWay);
@@ -257,7 +264,7 @@ public class RouteMapController {
 		return result;
 	}
 
-	private Boolean isReverse(double x1,double y1,double x2,double y2,String direction){
+	private Boolean isReverse(int x1,int y1,int x2,int y2,String direction){
 		double k = (y2-y1)/(x2-x1);
 		String tmp = "";
 		if((y2-y1>0&&x2-x1>0&&k>0.5)||(y2-y1<0&&x2-x1>0&&k>0.5)){

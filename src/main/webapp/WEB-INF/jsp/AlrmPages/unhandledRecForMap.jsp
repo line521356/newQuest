@@ -150,7 +150,7 @@
 							});
 					    });
 					  } else if(layEvent === 'posFP'){
-						  parent.fpPositioning(parseFloat(td.eq(4).text()), parseFloat(td.eq(3).text()));
+						  parent.fpPositioning(parseFloat(td.eq(5).text()), parseFloat(td.eq(4).text()));
 						  var index = parent.layer.getFrameIndex(window.name);
 						  parent.layer.close(index);
 					  } else if(layEvent === 'showPlan'){
